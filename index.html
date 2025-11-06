@@ -1,0 +1,3459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>HEXHUSTLE | Official Store</title>
+
+    <!-- 🔍 SEO Meta Tags -->
+    <meta name="description" content="HEXHUSTLE Official Store — fashion streetwear bergaya dark gothic dengan sentuhan urban dan kualitas premium. Temukan koleksi eksklusif kami sekarang.">
+    <meta name="keywords" content="HEXHUSTLE, streetwear, fashion gothic, pakaian urban, baju hitam, jaket, hoodie, clothing brand, fashion lokal">
+    <meta name="author" content="HEXHUSTLE Official">
+    <meta name="robots" content="index, follow">
+
+    <!-- 🌐 Open Graph (untuk Facebook, WhatsApp, Instagram) -->
+    <meta property="og:title" content="HEXHUSTLE | Official Store">
+    <meta property="og:description" content="Koleksi pakaian streetwear bergaya gothic dan urban. Tampilkan sisi gelap dan kuatmu bersama HEXHUSTLE.">
+    <meta property="og:image" content="https://yourdomain.com/favicon.png">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:type" content="website">
+
+    <!-- 🐦 Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HEXHUSTLE | Official Store">
+    <meta name="twitter:description" content="Streetwear bergaya dark gothic dan urban. Temukan koleksi eksklusif HEXHUSTLE.">
+    <meta name="twitter:image" content="https://yourdomain.com/favicon.png">
+
+    <!-- 🧿 Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- 🎨 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- 🔥 Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: #000;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Loading Spinner with Inverted Pentagram */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .pentagram-loader {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            animation: rotate 3s linear infinite;
+        }
+        
+        .pentagram-loader::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,5 L61,35 L95,35 L68,57 L79,87 L50,65 L21,87 L32,57 L5,35 L39,35 Z" fill="none" stroke="white" stroke-width="2"/></svg>') center/contain no-repeat;
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            background: url('https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUydnBmYm9pMDY2cTk0Z2tlbmZucXo4czhlYXg3OWw3c3B3ZTF4dXp2eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WjMnQiDQHbK6Y/giphy.gif') center/cover no-repeat;
+            transition: opacity 0.5s ease;
+        }
+        
+        .splash-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .splash-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Splash Header */
+        .splash-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+            background-color: transparent;
+        }
+        
+        .splash-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .splash-logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .splash-nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .splash-nav-icons a {
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .splash-nav-icons a:hover {
+            opacity: 0.7;
+        }
+        
+        .splash-content {
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .splash-logo-large {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .splash-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #fff;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .splash-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: transparent;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border: 2px solid #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .splash-btn:hover {
+            background-color: #fff;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            display: none; /* Hidden initially */
+        }
+        
+        header.show {
+            display: block; /* Show after splash screen */
+        }
+        
+        .header-transparent {
+            background-color: transparent;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.7;
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-icons a {
+            color: #000;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-icons a:hover {
+            opacity: 0.7;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #000;
+            color: #fff;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background-color: #fff;
+            padding: 15px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .search-container.active {
+            display: block;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000;
+            font-size: 14px;
+        }
+        
+        .autocomplete-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #000;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .autocomplete-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: #fff;
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .cart-sidebar.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .close-cart {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-info h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-info p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-quantity button {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #000;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        
+        .cart-item-quantity span {
+            margin: 0 10px;
+        }
+        
+        .cart-item-remove {
+            color: #ff0000;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .cart-summary {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .cart-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .cart-summary-row.total {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #333;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        /* Page Content */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGRtcmt0MWZrNHlvNDFwYjkyNGNla2ZmMHN1djczbDlnOTdlemgxNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0Iy8PYA8uXYJUdeo/giphy.gif') center/cover no-repeat;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            z-index: 2;
+            padding: 0 20px;
+            color: #fff;
+        }
+        
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        /* Featured Collection */
+        .featured {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 350px;
+            background-color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 1;
+        }
+        
+        /* Best Seller Section with Horizontal Scroll */
+        .best-seller {
+            padding: 80px 0;
+            background-color: #fff;
+        }
+        
+        .best-seller-container {
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+        
+        .best-seller-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .best-seller-container::-webkit-scrollbar-track {
+            background: #fff;
+        }
+        
+        .best-seller-container::-webkit-scrollbar-thumb {
+            background: #fff;
+            border-radius: 4px;
+        }
+        
+        .best-seller-container::-webkit-scrollbar-thumb:hover {
+            background: #fff;
+        }
+        
+        .best-seller-products {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+        }
+        
+        .best-seller-product {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        
+        /* Product Detail */
+        .product-detail {
+            padding: 80px 0;
+        }
+        
+        .product-detail-container {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .product-detail-images {
+            flex: 1;
+        }
+        
+        .product-detail-main-img {
+            width: 100%;
+            height: 500px;
+            background-color: #f5f5f5;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-detail-main-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-detail-thumbnails {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .product-detail-thumbnail {
+            width: 80px;
+            height: 100px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .product-detail-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-detail-info {
+            flex: 1;
+        }
+        
+        .product-detail-info h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .product-detail-info .price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .product-detail-info .original-price {
+            font-size: 1.2rem;
+            color: #888;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+        
+        .product-detail-info .discount-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ff0000;
+        }
+        
+        .product-detail-info .description {
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .product-options {
+            margin-bottom: 30px;
+        }
+        
+        .product-options h3 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .size-option {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .size-option:hover, .size-option.selected {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .quantity-selector button {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        
+        .quantity-selector span {
+            margin: 0 15px;
+            font-size: 1.2rem;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #333;
+        }
+        
+        .buy-now {
+            width: 100%;
+            padding: 15px;
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #000;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-now:hover {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        /* Categories Section */
+        .categories {
+            padding: 80px 0;
+            background-color: #fff;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-item {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+        
+        .category-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .category-overlay h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        /* Related Products */
+        .related-products {
+            padding: 80px 0;
+        }
+        
+        .related-products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        /* Category Detail */
+        .category-detail {
+            padding: 80px 0;
+        }
+        
+        .category-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .category-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .filter-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-count {
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-sort {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-sort select {
+            padding: 8px 15px;
+            border: 1px solid #000;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        
+        /* Collection Page */
+        .collection {
+            padding: 80px 0;
+        }
+        
+        .collection-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .collection-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .collection-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid#fff;
+            flex-wrap: wrap;
+        }
+        
+        .collection-tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .collection-tab:hover {
+            opacity: 0.7;
+        }
+        
+        .collection-tab.active {
+            font-weight: 600;
+        }
+        
+        .collection-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #000;
+        }
+        
+        /* Contact Page */
+        .contact {
+            padding: 80px 0;
+        }
+        
+        .contact-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .contact-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info-item i {
+            font-size: 20px;
+            margin-right: 15px;
+            margin-top: 3px;
+        }
+        
+        .contact-form {
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+        
+        .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #000;
+            background-color: #fff;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            padding: 12px 30px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #333;
+        }
+        
+        /* Search Results */
+        .search-results {
+            padding: 80px 0;
+        }
+        
+        .search-results-header {
+            margin-bottom: 30px;
+        }
+        
+        .search-results-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .search-results-header p {
+            color: #666;
+        }
+        
+        /* Newsletter Section */
+        .newsletter {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            margin-top: 30px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #000;
+            background-color: #fff;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            padding: 15px 25px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #333;
+        }
+        
+        /* Payment Page */
+        .payment {
+            padding: 80px 0;
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .payment-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .payment-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .payment-order {
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+        
+        .payment-order h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .payment-order-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .payment-order-item img {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .payment-order-item-info {
+            flex: 1;
+        }
+        
+        .payment-order-item-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .payment-order-item-info p {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .payment-order-summary {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .payment-order-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .payment-order-summary-row.total {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .payment-form {
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+        
+        .payment-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .payment-methods {
+            margin-bottom: 30px;
+        }
+        
+        .payment-methods h4 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .payment-method-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-method-option {
+            padding: 10px;
+            border: 1px solid #000;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method-option:hover, .payment-method-option.selected {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .payment-method-option i {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .payment-method-option span {
+            font-size: 12px;
+        }
+        
+        .cod-notice {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .cod-notice.show {
+            display: block;
+        }
+        
+        .pay-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .pay-btn:hover {
+            background-color: #333;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            text-decoration: none;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            opacity: 0.7;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #000;
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1001;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Push Notification Permission Banner */
+        .push-notification-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #000;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .push-notification-banner.show {
+            transform: translateY(0);
+        }
+        
+        .push-notification-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .push-notification-icon {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .push-notification-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .push-notification-btn {
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .push-notification-allow {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .push-notification-deny {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .product-detail-container {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form button {
+                margin-top: 10px;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .search-container {
+                width: 100%;
+                right: 0;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .collection-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .collection-tab {
+                flex-shrink: 0;
+            }
+            
+            .payment-method-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            
+            .push-notification-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .push-notification-buttons {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .product-img {
+                height: 200px;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-method-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay with Pentagram Spinner -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="pentagram-loader"></div>
+    </div>
+
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splash-screen">
+        <!-- Splash Header -->
+        <div class="splash-header">
+            <div class="container splash-header-container">
+                <div class="splash-logo" onclick="enterSite()">HEXAHUSTLE</div>
+                <div class="splash-nav-icons">
+                    <a href="#" id="splash-search-icon"><i class="fas fa-search"></i></a>
+                    <a href="#" onclick="showPage('home')"><i class="fas fa-fire"></i></a>
+                    <a href="#" id="splash-cart-icon"><i class="fas fa-shopping-bag"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="splash-content">
+            <div class="splash-logo-large">WELCOME</div>
+            <p class="splash-subtitle">Every stitch is a statement.
+Crafted for the restless, the bold, the unseen.
+HexaHustle — your armor for the grind.</p>
+            <button class="splash-btn" onclick="enterSite()">BELANJA</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo" onclick="showPage('home')">HEXHUSTLE</div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('collection')">KOLEKSI</a></li>
+                    <li><a href="#" onclick="showPage('about')">TENTANG</a></li>
+                    <li><a href="#" onclick="showPage('contact')">KONTAK</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="#" id="search-icon"><i class="fas fa-search"></i></a>
+                <a href="#" onclick="showPage('home')"><i class="fas fa-fire"></i></a>
+                <a href="#" id="cart-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+            
+            <!-- Search Container -->
+            <div class="search-container" id="search-container">
+                <input type="text" class="search-input" id="search-input" placeholder="Cari produk...">
+                <div class="autocomplete-results" id="autocomplete-results"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>KERANJANG BELANJA</h2>
+            <div class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="empty-cart">
+                <p>Keranjang belanja Anda kosong</p>
+            </div>
+        </div>
+        <div class="cart-summary" id="cart-summary" style="display: none;">
+            <div class="cart-summary-row">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">Rp 0</span>
+            </div>
+            <div class="cart-summary-row">
+                <span>Ongkos Kirim</span>
+                <span>Rp 0</span>
+            </div>
+            <div class="cart-summary-row total">
+                <span>Total</span>
+                <span id="cart-total">Rp 0</span>
+            </div>
+            <button class="checkout-btn" onclick="showPage('payment')">CHECKOUT</button>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div class="page active" id="home-page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>HEXHUSTLE</h1>
+                <p>We don't follow trends — we build empires.
+This is HexaHustle: minimal in design, maximal in attitude.
+Wear the darkness. Own the city.</p>
+                <a href="#" class="btn" onclick="showPage('collection')">BELI SEKARANG</a>
+            </div>
+        </section>
+
+        <!-- Featured Collection -->
+        <section class="featured">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Koleksi Terbaru</h2>
+                    <p>Produk unggulan kami musim ini</p>
+                </div>
+                <div class="products" id="featured-products">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Seller Section with Horizontal Scroll -->
+        <section class="best-seller">
+            <div class="container">
+                <div class="section-title">
+                    <h2>PRODUK TERLARIS</h2>
+                    <p>Produk paling diminati pelanggan kami</p>
+                </div>
+                <div class="best-seller-container">
+                    <div class="best-seller-products" id="best-seller-products">
+                        <!-- Products will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <div class="container">
+                <div class="section-title">
+                    <h2>KATEGORI</h2>
+                    <p>Jelajahi koleksi kami berdasarkan kategori</p>
+                </div>
+                <div class="category-grid">
+                    <div class="category-item" onclick="showCategoryDetail('tshirts')">
+                        <i class="fas fa-tshirt category-icon"></i>
+                        <div class="category-overlay">
+                            <h3>T-SHIRTS</h3>
+                        </div>
+                    </div>
+                    <div class="category-item" onclick="showCategoryDetail('hoodies')">
+                        <i class="fas fa-tshirt category-icon"></i>
+                        <div class="category-overlay">
+                            <h3>HOODIES</h3>
+                        </div>
+                    </div>
+                    <div class="category-item" onclick="showCategoryDetail('pants')">
+                        <i class="fas fa-socks category-icon"></i>
+                        <div class="category-overlay">
+                            <h3>PANTS</h3>
+                        </div>
+                    </div>
+                    <div class="category-item" onclick="showCategoryDetail('accessories')">
+                        <i class="fas fa-glasses category-icon"></i>
+                        <div class="category-overlay">
+                            <h3>AKSESORIS</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter">
+            <div class="container">
+                <div class="section-title">
+                    <h2>BERLANGGANAN NEWSLETTER</h2>
+                    <p>Dapatkan informasi produk terbaru dan penawaran eksklusif</p>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Email Anda">
+                    <button type="submit">LANGGANAN</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Product Detail Page -->
+    <div class="page" id="product-detail-page">
+        <section class="product-detail">
+            <div class="container">
+                <div class="product-detail-container">
+                    <div class="product-detail-images">
+                        <div class="product-detail-main-img">
+                            <img id="product-main-image" src="https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg" alt="Product Image">
+                        </div>
+                        <div class="product-detail-thumbnails">
+                            <div class="product-detail-thumbnail">
+                                <img src="https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg" alt="Product Thumbnail 1">
+                            </div>
+                            <div class="product-detail-thumbnail">
+                                <img src="https://i.ibb.co.com/tTkJj8wD/IMG-20251106-WA0033.jpg" alt="Product Thumbnail 2">
+                            </div>
+                            <div class="product-detail-thumbnail">
+                                <img src="https://i.ibb.co.com/xtcbG2TT/IMG-20251106-WA0036.jpg" alt="Product Thumbnail 3">
+                            </div>
+                            <div class="product-detail-thumbnail">
+                                <img src="https://i.ibb.co.com/mV4RtwPh/IMG-20251106-WA0035.jpg" alt="Product Thumbnail 4">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-detail-info">
+                        <h1 id="product-name">Hexareign Shadow Set</h1>
+                        <div class="price" id="product-price">
+                            <span class="original-price" id="original-price" style="display: none;">Rp 0</span>
+                            <span class="discount-price" id="discount-price" style="display: none;">Rp 0</span>
+                            <span id="normal-price">Rp 0</span>
+                        </div>
+                        <div class="description" id="product-description">
+                            Setelan premium dengan desain minimalis dan bahan berkualitas tinggi. Cocok untuk gaya urban yang simpel namun tetap stylish.
+                        </div>
+                        <div class="product-options">
+                            <h3>UKURAN</h3>
+                            <div class="size-options">
+                                <div class="size-option">S</div>
+                                <div class="size-option">M</div>
+                                <div class="size-option selected">L</div>
+                                <div class="size-option">XL</div>
+                            </div>
+                        </div>
+                        <div class="quantity-selector">
+                            <button id="quantity-minus">-</button>
+                            <span id="quantity">1</span>
+                            <button id="quantity-plus">+</button>
+                        </div>
+                        <button class="add-to-cart" id="add-to-cart">TAMBAH KE KERANJANG</button>
+                        <button class="buy-now" id="buy-now">BELI SEKARANG</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Related Products Section -->
+        <section class="related-products">
+            <div class="container">
+                <div class="section-title">
+                    <h2>PRODUK TERKAIT</h2>
+                    <p>Produk lain yang mungkin Anda suka</p>
+                </div>
+                <div class="related-products-container" id="related-products">
+                    <!-- Related products will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Category Detail Page -->
+    <div class="page" id="category-detail-page">
+        <section class="category-detail">
+            <div class="container">
+                <div class="category-header">
+                    <h1 id="category-name">T-SHIRTS</h1>
+                    <p id="category-description">Koleksi kaos dengan desain minimalis dan bahan berkualitas tinggi</p>
+                </div>
+                <div class="filter-options">
+                    <div class="filter-count">
+                        <span id="product-count">8</span> Produk
+                    </div>
+                    <div class="filter-sort">
+                        <span>Urutkan:</span>
+                        <select id="sort-select" onchange="sortProducts(this.value)">
+                            <option value="newest">Terbaru</option>
+                            <option value="price-low">Harga Terendah</option>
+                            <option value="price-high">Harga Tertinggi</option>
+                            <option value="bestseller">Terlaris</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="products" id="category-products">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Collection Page -->
+    <div class="page" id="collection-page">
+        <section class="collection">
+            <div class="container">
+                <div class="collection-header">
+                    <h1>KOLEKSI</h1>
+                    <p>Jelajahi seluruh koleksi HEXHUSTLE</p>
+                </div>
+                <div class="collection-tabs">
+                    <div class="collection-tab active" onclick="filterCollection('all')">SEMUA</div>
+                    <div class="collection-tab" onclick="filterCollection('new')">TERBARU</div>
+                    <div class="collection-tab" onclick="filterCollection('bestseller')">TERLARIS</div>
+                    <div class="collection-tab" onclick="filterCollection('sale')">DISKON</div>
+                </div>
+                <div class="products" id="collection-products">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Payment Page -->
+    <div class="page" id="payment-page">
+        <section class="payment">
+            <div class="container">
+                <div class="payment-header">
+                    <h1>PEMBAYARAN</h1>
+                    <p>Lengkapi data pembayaran Anda</p>
+                </div>
+                <div class="payment-container">
+                    <div class="payment-order">
+                        <h3>INFORMASI PESANAN</h3>
+                        <div id="payment-order-items">
+                            <!-- Order items will be dynamically loaded here -->
+                        </div>
+                        <div class="payment-order-summary">
+                            <div class="payment-order-summary-row">
+                                <span>Subtotal</span>
+                                <span id="payment-subtotal">Rp 0</span>
+                            </div>
+                            <div class="payment-order-summary-row">
+                                <span>Ongkos Kirim</span>
+                                <span>Rp 0</span>
+                            </div>
+                            <div class="payment-order-summary-row total">
+                                <span>Total</span>
+                                <span id="payment-total">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-form">
+                        <h3>INFORMASI PEMBAYARAN</h3>
+                        <form id="payment-form">
+                            <div class="form-group">
+                                <label for="payment-name">Nama Lengkap</label>
+                                <input type="text" id="payment-name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-contact">Nomor Kontak</label>
+                                <input type="tel" id="payment-contact" name="contact" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-email">Email</label>
+                                <input type="email" id="payment-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-address">Alamat Lengkap</label>
+                                <textarea id="payment-address" name="address" required></textarea>
+                            </div>
+                            <div class="payment-methods">
+                                <h4>Metode Pembayaran</h4>
+                                <div class="payment-method-options">
+                                    <div class="payment-method-option" data-method="bca">
+                                        <i class="fas fa-university"></i>
+                                        <span>BCA</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="bni">
+                                        <i class="fas fa-university"></i>
+                                        <span>BNI</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="bri">
+                                        <i class="fas fa-university"></i>
+                                        <span>BRI</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="mandiri">
+                                        <i class="fas fa-university"></i>
+                                        <span>Mandiri</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="dana">
+                                        <i class="fas fa-wallet"></i>
+                                        <span>DANA</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="ovo">
+                                        <i class="fas fa-wallet"></i>
+                                        <span>OVO</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="shopeepay">
+                                        <i class="fas fa-wallet"></i>
+                                        <span>ShopeePay</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="gopay">
+                                        <i class="fas fa-wallet"></i>
+                                        <span>GoPay</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="paypal">
+                                        <i class="fab fa-paypal"></i>
+                                        <span>PayPal</span>
+                                    </div>
+                                    <div class="payment-method-option" data-method="cod">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        <span>COD</span>
+                                    </div>
+                                </div>
+                                <div class="cod-notice" id="cod-notice">
+                                    <p>COD hanya tersedia untuk wilayah Jakarta dan sekitarnya dengan minimum pembelian Rp 100.000</p>
+                                </div>
+                            </div>
+                            <button type="button" class="pay-btn" onclick="processPayment()">BAYAR SEKARANG</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page" id="contact-page">
+        <section class="contact">
+            <div class="container">
+                <div class="contact-header">
+                    <h1>KONTAK KAMI</h1>
+                    <p>Hubungi kami untuk informasi lebih lanjut</p>
+                </div>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>INFORMASI KONTAK</h3>
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>ALAMAT</h4>
+                                <p>Jl. Sudirman No. 123, Jakarta Selatan, Indonesia</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>TELEPON</h4>
+                                <p>+62 21 1234 5678</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>EMAIL</h4>
+                                <p>info@hexhustle.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>JAM OPERASIONAL</h4>
+                                <p>Senin - Jumat: 09.00 - 18.00<br>Sabtu: 10.00 - 16.00<br>Minggu: Tutup</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>KIRIM PESAN</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name">Nama</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subjek</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Pesan</label>
+                                <textarea id="message" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">KIRIM PESAN</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Search Results Page -->
+    <div class="page" id="search-results-page">
+        <section class="search-results">
+            <div class="container">
+                <div class="search-results-header">
+                    <h1>HASIL PENCARIAN</h1>
+                    <p>Menampilkan hasil untuk "<span id="search-query"></span>"</p>
+                </div>
+                <div class="products" id="search-results-products">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div class="page" id="about-page">
+        <section class="featured">
+            <div class="container">
+                <div class="section-title">
+                    <h2>TENTANG HEXHUSTLE</h2>
+                    <p>Brand pakaian urban dengan fokus pada desain minimalis dan kualitas premium</p>
+                </div>
+                <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8;">
+                    <p>HEXHUSTLE adalah brand pakaian urban yang didirikan pada tahun 2020 dengan visi untuk menyediakan pakaian berkualitas tinggi dengan desain minimalis untuk generasi muda yang dinamis.</p>
+                    <p>Kami percaya bahwa fashion bukan hanya tentang penampilan, tetapi juga tentang ekspresi diri. Setiap produk HEXHUSTLE dirancang dengan hati-hati untuk memberikan kenyamanan dan gaya yang tak tertandingi.</p>
+                    <p>Dengan menggunakan bahan-bahan premium dan proses produksi yang berkelanjutan, kami berkomitmen untuk menciptakan produk yang tidak hanya stylish tetapi juga ramah lingkungan.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>TENTANG HEXHUSTLE</h3>
+                    <p>Brand pakaian urban dengan fokus pada desain minimalis dan kualitas premium untuk generasi muda yang dinamis.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>LINK CEPAT</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')">Beranda</a></li>
+                        <li><a href="#" onclick="showPage('collection')">Koleksi</a></li>
+                        <li><a href="#" onclick="showPage('about')">Tentang Kami</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>BANTUAN</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Pengiriman</a></li>
+                        <li><a href="#">Pengembalian</a></li>
+                        <li><a href="#">Ukuran</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>KONTAK</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +62 21 1234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@hexhustle.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 HEXHUSTLE. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Push Notification Permission Banner -->
+    <div class="push-notification-banner" id="push-notification-banner">
+        <div class="push-notification-content">
+            <i class="fas fa-bell push-notification-icon"></i>
+            <div>
+                <h4>Aktifkan Notifikasi</h4>
+                <p>Dapatkan informasi tentang produk baru dan penawaran khusus</p>
+            </div>
+        </div>
+        <div class="push-notification-buttons">
+            <button class="push-notification-btn push-notification-allow" id="allow-notification">Izinkan</button>
+            <button class="push-notification-btn push-notification-deny" id="deny-notification">Nanti Saja</button>
+        </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdSg1N0RWimvqduIkuTNoXzY1uW8-qPwg",
+            authDomain: "pinup-f0c6d.firebaseapp.com",
+            projectId: "pinup-f0c6d",
+            storageBucket: "pinup-f0c6d.firebasestorage.app",
+            messagingSenderId: "975740522083",
+            appId: "1:975740522083:web:3b34e1ee179f47cd5db256",
+            measurementId: "G-J4VB9XSSEF"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Anonymous authentication
+        function signInAnonymously() {
+            showLoadingSpinner();
+            auth.signInAnonymously()
+                .then((userCredential) => {
+                    // Signed in anonymously
+                    const user = userCredential.user;
+                    console.log("Anonymous user signed in:", user.uid);
+                    
+                    // Store user data in Firestore
+                    db.collection("users").doc(user.uid).set({
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        isAnonymous: true
+                    }).then(() => {
+                        console.log("User data saved to Firestore");
+                        hideLoadingSpinner();
+                    }).catch((error) => {
+                        console.error("Error saving user data:", error);
+                        hideLoadingSpinner();
+                    });
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Anonymous sign-in error:", errorCode, errorMessage);
+                    hideLoadingSpinner();
+                });
+        }
+
+        // Check authentication state
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                console.log("User is signed in:", user.uid);
+                
+                // Load cart data from Firestore
+                loadCartFromFirestore();
+                
+                // Initialize app
+                initializeApp();
+            } else {
+                // User is signed out, sign in anonymously
+                signInAnonymously();
+            }
+        });
+
+        // Initialize app
+        function initializeApp() {
+            // Load products from cache or API
+            loadProducts();
+            
+            // Check for discounted products
+            checkDiscountedProducts();
+            
+            // Initialize push notifications
+            initializePushNotifications();
+            
+            // Initialize cache
+            initializeCache();
+        }
+
+        // Sample product data
+        const products = [
+            {
+                id: 'hexahustle-shadowset',
+                name: 'Hexareign Shadow Set',
+                price: 546000,
+                category: 'tshirts',
+                image: 'https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg',
+                description: 'Masuki dimensi gelap penuh karakter dengan Hexareign Shadow Set — kombinasi sempurna antara kekuatan dan ketenangan dalam gaya urban gothic.',
+                bestseller: true
+            },
+            {
+                id: 'hexahustle-obsidian',
+                name: 'Hexahustle Obsidian Long Sleeve',
+                price: 250000,
+                category: 'hoodies',
+                image: 'https://i.ibb.co.com/tTkJj8wD/IMG-20251106-WA0033.jpg',
+                description: 'Kesederhanaan yang gelap— Hexareign Obsidian Crewneck dirancang untuk mereka yang hidup di antara bayangan dan sorotan.',
+                bestseller: true
+            },
+            {
+                id: 'hexahustle-little',
+                name: 'Hexahustle Little Reign Tee',
+                price: 150000,
+                category: 'pants',
+                image: 'https://i.ibb.co.com/xtcbG2TT/IMG-20251106-WA0036.jpg',
+                description: 'Perpaduan antara ketegasan dan ketenangan dalam versi mini.',
+                bestseller: false
+            },
+            {
+                id: 'hexahustle-throne',
+                name: 'hexahustle Throne Tee',
+                price: 250000,
+                category: 'accessories',
+                image: 'https://i.ibb.co.com/mV4RtwPh/IMG-20251106-WA0035.jpg',
+                description: 'Di balik setiap bayangan, ada sosok yang memerintah.',
+                bestseller: false
+            },
+            {
+                id: 'hexahustle-venom',
+                name: 'Hexahustle Venom Chain Jacket',
+                price: 380000,
+                category: 'tshirts',
+                image: 'https://i.ibb.co.com/WpD2XSmM/IMG-20251106-WA0038.jpg',
+                description: 'Ketika kegelapan berpadu dengan kekuatan— lahirlah Hexareign Venom Chain Jacket.',
+                bestseller: true
+            },
+            {
+                id: 'hexahustle-devilshade',
+                name: 'Hexahustle Devilshade Fleece Hoodie',
+                price: 450000,
+                category: 'hoodies',
+                image: 'https://i.ibb.co.com/VYTZ5gg4/IMG-20251106-WA0037.jpg',
+                description: 'Bayangan yang hidup dalam bentuk hoodie.',
+                bestseller: true
+            },
+            {
+                id: 'hexahustle-dominion',
+                name: 'Hexahustle Dominion Spiked Jacket',
+                price: 375000,
+                category: 'pants',
+                image: 'https://i.ibb.co.com/Gf9DKgDC/IMG-20251106-WA0039.jpg',
+                description: 'Hexareign Dominion Spiked Jacket adalah manifestasi dari kekuasaan dan perlawanan dalam bentuk kain.',
+                bestseller: false
+            },
+            {
+                id: 'hexahustle-shadowscore',
+                name: 'Hexahustle ShadowCore Set',
+                price: 1230000,
+                category: 'accessories',
+                image: 'https://i.ibb.co.com/kgFCjbFS/IMG-20251106-WA0041.jpg',
+                description: 'Tunjukkan sisi gelap dan berani lo dengan Shadowcore Set dari HexaHustle.Hoodie oversized dengan logo tegas berpadu dengan celana loose fit yang nyaman, menciptakan tampilan gothic street yang autentik.',
+                bestseller: false
+            },
+            {
+                id: 'hexahustle-dark',
+                name: 'Hexahustle Dark Ritual Long Sleeve',
+                price: 250000,
+                category: 'tshirts',
+                image: 'https://i.ibb.co.com/Pv8xgpJr/IMG-20251106-WA0040.jpg',
+                description: 'Koleksi Dark Ritual dari HexaHustle hadir buat lo yang hidup di antara bayangan dan seni.',
+                bestseller: true
+            },
+            {
+                id: 'hexahustle-mono',
+                name: 'Hexahustle "Mono Reign" Crewneck Set',
+                price: 450000,
+                category: 'hoodies',
+                image: 'https://i.ibb.co.com/ycD75kk5/IMG-20251106-WA0042.jpg',
+                description: 'Minimalis tapi penuh wibawa— Mono Reign dari HexaHustle hadir buat lo yang menghargai ketenangan dalam dominasi hitam.',
+                bestseller: true
+            }
+        ];
+
+        // Cart data
+        let cart = [];
+        let selectedPaymentMethod = '';
+        let currentProduct = null;
+        let discountedProducts = [];
+
+        // Initialize cache
+        function initializeCache() {
+            // Check if products are cached
+            const cachedProducts = localStorage.getItem('hexahustle_products');
+            if (cachedProducts) {
+                // Use cached products
+                const cachedData = JSON.parse(cachedProducts);
+                if (cachedData.timestamp && (Date.now() - cachedData.timestamp < 3600000)) { // Cache for 1 hour
+                    // Use cached data
+                    console.log('Using cached products');
+                } else {
+                    // Cache expired, update it
+                    updateProductCache();
+                }
+            } else {
+                // No cache, create it
+                updateProductCache();
+            }
+            
+            // Check if cart is cached
+            const cachedCart = localStorage.getItem('hexahustle_cart');
+            if (cachedCart) {
+                cart = JSON.parse(cachedCart);
+                updateCart();
+            }
+            
+            // Check for recently viewed products
+            const recentlyViewed = localStorage.getItem('hexahustle_recently_viewed');
+            if (recentlyViewed) {
+                // Use recently viewed products for recommendations
+                console.log('Recently viewed products:', JSON.parse(recentlyViewed));
+            }
+        }
+
+        // Update product cache
+        function updateProductCache() {
+            const cacheData = {
+                products: products,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('hexahustle_products', JSON.stringify(cacheData));
+            console.log('Product cache updated');
+        }
+
+        // Load products
+        function loadProducts() {
+            // Load featured products
+            const featuredProductsContainer = document.getElementById('featured-products');
+            featuredProductsContainer.innerHTML = '';
+            
+            // Get first 4 products for featured section
+            const featuredProducts = products.slice(0, 4);
+            
+            featuredProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                featuredProductsContainer.appendChild(productCard);
+            });
+            
+            // Load best seller products
+            const bestSellerProductsContainer = document.getElementById('best-seller-products');
+            bestSellerProductsContainer.innerHTML = '';
+            
+            // Get best seller products
+            const bestSellerProducts = products.filter(p => p.bestseller);
+            
+            bestSellerProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                productCard.classList.add('best-seller-product');
+                bestSellerProductsContainer.appendChild(productCard);
+            });
+            
+            // Initialize collection page
+            initCollectionPage();
+        }
+
+        // Create product card
+        function createProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.onclick = () => showProductDetail(product.id);
+            
+            // Check if product has discount
+            const discount = getProductDiscount(product.id);
+            let discountBadge = '';
+            let priceDisplay = `<p>Rp ${product.price.toLocaleString('id-ID')}</p>`;
+            
+            if (discount > 0) {
+                const discountedPrice = Math.round(product.price * (1 - discount / 100));
+                discountBadge = `<div class="discount-badge">-${discount}%</div>`;
+                priceDisplay = `
+                    <p>
+                        <span style="text-decoration: line-through; color: #888; margin-right: 5px;">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span style="color: #ff0000;">Rp ${discountedPrice.toLocaleString('id-ID')}</span>
+                    </p>
+                `;
+            }
+            
+            productCard.innerHTML = `
+                ${discountBadge}
+                <div class="product-img">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    ${priceDisplay}
+                </div>
+            `;
+            
+            return productCard;
+        }
+
+        // Check for discounted products
+        function checkDiscountedProducts() {
+            const discountData = localStorage.getItem('hexahustle_discounts');
+            
+            if (discountData) {
+                const data = JSON.parse(discountData);
+                const now = Date.now();
+                
+                // Check if 24 hours have passed
+                if (now - data.timestamp < 86400000) { // 24 hours in milliseconds
+                    // Use existing discounted products
+                    discountedProducts = data.products;
+                    console.log('Using existing discounted products:', discountedProducts);
+                } else {
+                    // 24 hours have passed, select new products
+                    selectNewDiscountedProducts();
+                }
+            } else {
+                // No discount data, select new products
+                selectNewDiscountedProducts();
+            }
+        }
+
+        // Select new discounted products
+        function selectNewDiscountedProducts() {
+            // Clear previous discounts
+            discountedProducts = [];
+            
+            // Select 2 random products
+            const shuffled = [...products].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 2);
+            
+            // Apply random discounts (10-30%)
+            selected.forEach(product => {
+                const discount = Math.floor(Math.random() * 21) + 10; // Random discount between 10-30%
+                discountedProducts.push({
+                    id: product.id,
+                    discount: discount
+                });
+            });
+            
+            // Save to localStorage
+            const discountData = {
+                products: discountedProducts,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('hexahustle_discounts', JSON.stringify(discountData));
+            
+            console.log('New discounted products selected:', discountedProducts);
+            
+            // Reload products to show discounts
+            loadProducts();
+            
+            // Show notification about new discounts
+            showNotification('Penawaran spesial! Diskon hingga 30% untuk produk pilihan');
+        }
+
+        // Get product discount
+        function getProductDiscount(productId) {
+            const discountedProduct = discountedProducts.find(p => p.id === productId);
+            return discountedProduct ? discountedProduct.discount : 0;
+        }
+
+        // Initialize push notifications
+        function initializePushNotifications() {
+            // Check if user has already made a decision
+            const notificationDecision = localStorage.getItem('hexahustle_notification_decision');
+            
+            if (!notificationDecision) {
+                // Show notification permission banner after a delay
+                setTimeout(() => {
+                    document.getElementById('push-notification-banner').classList.add('show');
+                }, 5000);
+            }
+            
+            // Set up event listeners for notification buttons
+            document.getElementById('allow-notification').addEventListener('click', requestNotificationPermission);
+            document.getElementById('deny-notification').addEventListener('click', denyNotificationPermission);
+        }
+
+        // Request notification permission
+        function requestNotificationPermission() {
+            // Hide banner
+            document.getElementById('push-notification-banner').classList.remove('show');
+            
+            // Save decision
+            localStorage.setItem('hexahustle_notification_decision', 'denied');
+            
+            // Check if browser supports notifications
+            if ('Notification' in window) {
+                // Request permission
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        // Save decision
+                        localStorage.setItem('hexahustle_notification_decision', 'granted');
+                        
+                        // Show a test notification
+                        showPushNotification('Notifikasi Diaktifkan', 'Anda akan menerima informasi tentang produk baru dan penawaran khusus');
+                        
+                        // Register service worker for push notifications
+                        registerServiceWorker();
+                    }
+                });
+            }
+        }
+
+        // Deny notification permission
+        function denyNotificationPermission() {
+            // Hide banner
+            document.getElementById('push-notification-banner').classList.remove('show');
+            
+            // Save decision
+            localStorage.setItem('hexahustle_notification_decision', 'denied');
+        }
+
+        // Register service worker for push notifications
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                        
+                        // Subscribe to push notifications
+                        subscribeToPushNotifications(registration);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            }
+        }
+
+        // Subscribe to push notifications
+        function subscribeToPushNotifications(registration) {
+            // This is a simplified version - in a real app, you would:
+            // 1. Generate VAPID keys
+            // 2. Use the public key to subscribe
+            // 3. Send the subscription to your server
+            
+            // For this demo, we'll just show a notification when a new product is added
+            console.log('Subscribed to push notifications');
+        }
+
+        // Show push notification
+        function showPushNotification(title, body) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification(title, {
+                    body: body,
+                    icon: 'https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg',
+                    badge: 'https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg'
+                });
+            }
+        }
+
+        // Loading spinner functions
+        function showLoadingSpinner() {
+            document.getElementById('loading-overlay').classList.add('active');
+        }
+
+        function hideLoadingSpinner() {
+            document.getElementById('loading-overlay').classList.remove('active');
+        }
+
+        // Load cart data from Firestore
+        function loadCartFromFirestore() {
+            const user = auth.currentUser;
+            if (user) {
+                db.collection("carts").doc(user.uid).get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            cart = doc.data().items || [];
+                            updateCart();
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error loading cart:", error);
+                    });
+            }
+        }
+
+        // Save cart data to Firestore
+        function saveCartToFirestore() {
+            const user = auth.currentUser;
+            if (user) {
+                db.collection("carts").doc(user.uid).set({
+                    items: cart,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(() => {
+                    console.log("Cart saved to Firestore");
+                })
+                .catch((error) => {
+                    console.error("Error saving cart:", error);
+                });
+            }
+            
+            // Also save to localStorage for caching
+            localStorage.setItem('hexahustle_cart', JSON.stringify(cart));
+        }
+
+        // Enter site from splash screen
+        function enterSite() {
+            const splashScreen = document.getElementById('splash-screen');
+            splashScreen.classList.add('hide');
+            
+            // Show the main header
+            const header = document.getElementById('header');
+            header.classList.add('show');
+            
+            // Make header transparent on home page
+            header.classList.add('header-transparent');
+            
+            // Remove transparent class when scrolling
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    header.classList.remove('header-transparent');
+                } else {
+                    header.classList.add('header-transparent');
+                }
+            });
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Remove transparent header when navigating away from home
+            const header = document.getElementById('header');
+            header.classList.remove('header-transparent');
+            
+            // Close mobile menu if open
+            const nav = document.querySelector('nav ul');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            }
+            
+            // Close search if open
+            const searchContainer = document.getElementById('search-container');
+            if (searchContainer.classList.contains('active')) {
+                searchContainer.classList.remove('active');
+            }
+            
+            // Initialize payment page if needed
+            if (pageId === 'payment') {
+                initPaymentPage();
+            }
+        }
+
+        // Show product detail
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                currentProduct = product;
+                
+                // Save to recently viewed
+                saveToRecentlyViewed(productId);
+                
+                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('product-description').textContent = product.description;
+                document.getElementById('product-main-image').src = product.image;
+                
+                // Check for discount
+                const discount = getProductDiscount(product.id);
+                if (discount > 0) {
+                    const discountedPrice = Math.round(product.price * (1 - discount / 100));
+                    document.getElementById('original-price').textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
+                    document.getElementById('original-price').style.display = 'inline';
+                    document.getElementById('discount-price').textContent = `Rp ${discountedPrice.toLocaleString('id-ID')}`;
+                    document.getElementById('discount-price').style.display = 'inline';
+                    document.getElementById('normal-price').style.display = 'none';
+                } else {
+                    document.getElementById('original-price').style.display = 'none';
+                    document.getElementById('discount-price').style.display = 'none';
+                    document.getElementById('normal-price').textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
+                    document.getElementById('normal-price').style.display = 'inline';
+                }
+                
+                // Update thumbnails with actual product images
+                const thumbnails = document.querySelectorAll('.product-detail-thumbnail img');
+                if (thumbnails.length > 0) {
+                    thumbnails[0].src = product.image;
+                    // Find related products for other thumbnails
+                    const relatedProducts = products.filter(p => p.id !== productId && p.category === product.category);
+                    for (let i = 1; i < thumbnails.length && i <= relatedProducts.length; i++) {
+                        thumbnails[i].src = relatedProducts[i-1].image;
+                    }
+                }
+                
+                // Load related products
+                loadRelatedProducts(product);
+                
+                showPage('product-detail');
+            }
+        }
+
+        // Save to recently viewed
+        function saveToRecentlyViewed(productId) {
+            let recentlyViewed = [];
+            
+            // Get existing recently viewed products
+            const cached = localStorage.getItem('hexahustle_recently_viewed');
+            if (cached) {
+                recentlyViewed = JSON.parse(cached);
+            }
+            
+            // Add current product if not already in the list
+            if (!recentlyViewed.includes(productId)) {
+                recentlyViewed.unshift(productId);
+                
+                // Keep only the last 5 viewed products
+                if (recentlyViewed.length > 5) {
+                    recentlyViewed = recentlyViewed.slice(0, 5);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('hexahustle_recently_viewed', JSON.stringify(recentlyViewed));
+            }
+        }
+
+        // Load related products
+        function loadRelatedProducts(product) {
+            const relatedProductsContainer = document.getElementById('related-products');
+            relatedProductsContainer.innerHTML = '';
+            
+            // Get products from the same category
+            const sameCategoryProducts = products.filter(p => p.id !== product.id && p.category === product.category);
+            
+            // If not enough products from the same category, get best sellers
+            let relatedProducts = sameCategoryProducts;
+            if (sameCategoryProducts.length < 3) {
+                const bestSellers = products.filter(p => p.id !== product.id && p.bestseller);
+                relatedProducts = [...sameCategoryProducts, ...bestSellers].slice(0, 3);
+            } else {
+                relatedProducts = sameCategoryProducts.slice(0, 3);
+            }
+            
+            relatedProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                relatedProductsContainer.appendChild(productCard);
+            });
+        }
+
+        // Show category detail
+        function showCategoryDetail(categoryId) {
+            const categoryNames = {
+                'tshirts': 'T-SHIRTS',
+                'hoodies': 'HOODIES',
+                'pants': 'PANTS',
+                'accessories': 'AKSESORIS'
+            };
+            
+            const categoryDescriptions = {
+                'tshirts': 'Koleksi kaos dengan desain minimalis dan bahan berkualitas tinggi',
+                'hoodies': 'Koleksi hoodie dengan desain trendy dan bahan yang nyaman',
+                'pants': 'Koleksi celana dengan potongan modern dan bahan yang fleksibel',
+                'accessories': 'Koleksi aksesoris untuk melengkapi gaya urban Anda'
+            };
+            
+            document.getElementById('category-name').textContent = categoryNames[categoryId];
+            document.getElementById('category-description').textContent = categoryDescriptions[categoryId];
+            
+            // Filter products by category
+            const categoryProducts = products.filter(p => p.category === categoryId);
+            const categoryProductsContainer = document.getElementById('category-products');
+            categoryProductsContainer.innerHTML = '';
+            
+            categoryProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                categoryProductsContainer.appendChild(productCard);
+            });
+            
+            document.getElementById('product-count').textContent = categoryProducts.length;
+            
+            showPage('category-detail');
+        }
+
+        // Sort products
+        function sortProducts(sortBy) {
+            const categoryProductsContainer = document.getElementById('category-products');
+            const productCards = Array.from(categoryProductsContainer.querySelectorAll('.product-card'));
+            
+            // Get product IDs from data attributes or create them
+            productCards.forEach(card => {
+                const productName = card.querySelector('h3').textContent;
+                const product = products.find(p => p.name === productName);
+                if (product) {
+                    card.dataset.productId = product.id;
+                    card.dataset.price = product.price;
+                    card.dataset.bestseller = product.bestseller;
+                }
+            });
+            
+            // Sort based on selected option
+            switch(sortBy) {
+                case 'price-low':
+                    productCards.sort((a, b) => {
+                        return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+                    });
+                    break;
+                case 'price-high':
+                    productCards.sort((a, b) => {
+                        return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+                    });
+                    break;
+                case 'bestseller':
+                    productCards.sort((a, b) => {
+                        return b.dataset.bestseller === 'true' ? 1 : -1;
+                    });
+                    break;
+                default: // newest
+                    // Keep original order
+                    break;
+            }
+            
+            // Re-append sorted elements
+            productCards.forEach(card => {
+                categoryProductsContainer.appendChild(card);
+            });
+        }
+
+        // Filter collection
+        function filterCollection(filter) {
+            // Update active tab
+            const tabs = document.querySelectorAll('.collection-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter products
+            let filteredProducts = products;
+            
+            if (filter === 'new') {
+                filteredProducts = products.slice(0, 4);
+            } else if (filter === 'bestseller') {
+                filteredProducts = products.filter(p => p.bestseller);
+            } else if (filter === 'sale') {
+                // Get products with discounts
+                filteredProducts = products.filter(p => getProductDiscount(p.id) > 0);
+            }
+            
+            const collectionProductsContainer = document.getElementById('collection-products');
+            collectionProductsContainer.innerHTML = '';
+            
+            filteredProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                collectionProductsContainer.appendChild(productCard);
+            });
+        }
+
+        // Initialize collection page
+        function initCollectionPage() {
+            const collectionProductsContainer = document.getElementById('collection-products');
+            collectionProductsContainer.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = createProductCard(product);
+                collectionProductsContainer.appendChild(productCard);
+            });
+        }
+
+        // Search functionality
+        const searchIcon = document.getElementById('search-icon');
+        const splashSearchIcon = document.getElementById('splash-search-icon');
+        const searchContainer = document.getElementById('search-container');
+        const searchInput = document.getElementById('search-input');
+        const autocompleteResults = document.getElementById('autocomplete-results');
+        
+        searchIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            searchContainer.classList.toggle('active');
+            if (searchContainer.classList.contains('active')) {
+                searchInput.focus();
+            }
+        });
+        
+        // Add functionality to splash screen search icon
+        splashSearchIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            enterSite();
+            searchContainer.classList.toggle('active');
+            if (searchContainer.classList.contains('active')) {
+                searchInput.focus();
+            }
+        });
+        
+        // Autocomplete functionality
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            if (query.length > 0) {
+                const filteredProducts = products.filter(product => 
+                    product.name.toLowerCase().includes(query)
+                );
+                
+                autocompleteResults.innerHTML = '';
+                autocompleteResults.style.display = 'block';
+                
+                if (filteredProducts.length > 0) {
+                    filteredProducts.forEach(product => {
+                        const item = document.createElement('div');
+                        item.className = 'autocomplete-item';
+                        item.textContent = product.name;
+                        item.onclick = function() {
+                            showProductDetail(product.id);
+                            searchContainer.classList.remove('active');
+                            searchInput.value = '';
+                            autocompleteResults.style.display = 'none';
+                        };
+                        autocompleteResults.appendChild(item);
+                    });
+                } else {
+                    const item = document.createElement('div');
+                    item.className = 'autocomplete-item';
+                    item.textContent = 'Tidak ada hasil ditemukan';
+                    autocompleteResults.appendChild(item);
+                }
+            } else {
+                autocompleteResults.style.display = 'none';
+            }
+        });
+        
+        // Search form submission
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            }
+        });
+        
+        // Perform search
+        function performSearch(query) {
+            document.getElementById('search-query').textContent = query;
+            
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            const searchResultsContainer = document.getElementById('search-results-products');
+            searchResultsContainer.innerHTML = '';
+            
+            if (filteredProducts.length > 0) {
+                filteredProducts.forEach(product => {
+                    const productCard = createProductCard(product);
+                    searchResultsContainer.appendChild(productCard);
+                });
+            } else {
+                searchResultsContainer.innerHTML = '<p style="text-align: center; width: 100%;">Tidak ada produk ditemukan untuk pencarian "' + query + '"</p>';
+            }
+            
+            searchContainer.classList.remove('active');
+            searchInput.value = '';
+            autocompleteResults.style.display = 'none';
+            
+            showPage('search-results');
+        }
+
+        // Cart functionality
+        const cartIcon = document.getElementById('cart-icon');
+        const splashCartIcon = document.getElementById('splash-cart-icon');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartSummary = document.getElementById('cart-summary');
+        const cartCount = document.querySelector('.cart-count');
+        
+        cartIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            cartSidebar.classList.add('active');
+        });
+        
+        // Add functionality to splash screen cart icon
+        splashCartIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            enterSite();
+            cartSidebar.classList.add('active');
+        });
+        
+        closeCart.addEventListener('click', function() {
+            cartSidebar.classList.remove('active');
+        });
+        
+        // Add to cart
+        const addToCartBtn = document.getElementById('add-to-cart');
+        addToCartBtn.addEventListener('click', function() {
+            if (!currentProduct) return;
+            
+            const existingItem = cart.find(item => item.id === currentProduct.id);
+            
+            if (existingItem) {
+                existingItem.quantity += parseInt(document.getElementById('quantity').textContent);
+            } else {
+                // Get the actual price (discounted if applicable)
+                const discount = getProductDiscount(currentProduct.id);
+                const price = discount > 0 ? 
+                    Math.round(currentProduct.price * (1 - discount / 100)) : 
+                    currentProduct.price;
+                
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    price: price,
+                    originalPrice: currentProduct.price,
+                    image: currentProduct.image,
+                    quantity: parseInt(document.getElementById('quantity').textContent),
+                    size: document.querySelector('.size-option.selected').textContent,
+                    discount: discount
+                });
+            }
+            
+            updateCart();
+            saveCartToFirestore();
+            cartSidebar.classList.add('active');
+            
+            // Show notification
+            showNotification('Produk berhasil ditambahkan ke keranjang');
+        });
+        
+        // Buy now functionality
+        const buyNowBtn = document.getElementById('buy-now');
+        buyNowBtn.addEventListener('click', function() {
+            if (!currentProduct) return;
+            
+            // Clear cart first
+            cart = [];
+            
+            // Get the actual price (discounted if applicable)
+            const discount = getProductDiscount(currentProduct.id);
+            const price = discount > 0 ? 
+                Math.round(currentProduct.price * (1 - discount / 100)) : 
+                currentProduct.price;
+            
+            // Add current product to cart
+            cart.push({
+                id: currentProduct.id,
+                name: currentProduct.name,
+                price: price,
+                originalPrice: currentProduct.price,
+                image: currentProduct.image,
+                quantity: parseInt(document.getElementById('quantity').textContent),
+                size: document.querySelector('.size-option.selected').textContent,
+                discount: discount
+            });
+            
+            updateCart();
+            saveCartToFirestore();
+            
+            // Navigate to payment page
+            showPage('payment');
+        });
+        
+        // Update cart
+        function updateCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart"><p>Keranjang belanja Anda kosong</p></div>';
+                cartSummary.style.display = 'none';
+                cartCount.textContent = '0';
+            } else {
+                let totalItems = 0;
+                let subtotal = 0;
+                
+                cart.forEach(item => {
+                    totalItems += item.quantity;
+                    subtotal += item.price * item.quantity;
+                    
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <h3>${item.name}</h3>
+                            <p>Rp ${item.price.toLocaleString('id-ID')} | Size: ${item.size}</p>
+                            <div class="cart-item-quantity">
+                                <button onclick="updateCartItemQuantity('${item.id}', -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateCartItemQuantity('${item.id}', 1)">+</button>
+                            </div>
+                            <div class="cart-item-remove" onclick="removeFromCart('${item.id}')">Hapus</div>
+                        </div>
+                    `;
+                    
+                    cartItems.appendChild(cartItem);
+                });
+                
+                document.getElementById('cart-subtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+                document.getElementById('cart-total').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+                cartSummary.style.display = 'block';
+                cartCount.textContent = totalItems;
+            }
+        }
+        
+        // Update cart item quantity
+        function updateCartItemQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            
+            if (item) {
+                item.quantity += change;
+                
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCart();
+                    saveCartToFirestore();
+                }
+            }
+        }
+        
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+            saveCartToFirestore();
+        }
+
+        // Initialize payment page
+        function initPaymentPage() {
+            const paymentOrderItems = document.getElementById('payment-order-items');
+            paymentOrderItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                paymentOrderItems.innerHTML = '<p>Keranjang belanja Anda kosong</p>';
+                document.getElementById('payment-subtotal').textContent = 'Rp 0';
+                document.getElementById('payment-total').textContent = 'Rp 0';
+            } else {
+                let subtotal = 0;
+                
+                cart.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                    
+                    const orderItem = document.createElement('div');
+                    orderItem.className = 'payment-order-item';
+                    
+                    orderItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="payment-order-item-info">
+                            <h4>${item.name}</h4>
+                            <p>Rp ${item.price.toLocaleString('id-ID')} | Size: ${item.size} | Qty: ${item.quantity}</p>
+                        </div>
+                    `;
+                    
+                    paymentOrderItems.appendChild(orderItem);
+                });
+                
+                document.getElementById('payment-subtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+                document.getElementById('payment-total').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            }
+            
+            // Reset payment method selection
+            document.querySelectorAll('.payment-method-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            selectedPaymentMethod = '';
+            document.getElementById('cod-notice').classList.remove('show');
+        }
+
+        // Payment method selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentMethodOptions = document.querySelectorAll('.payment-method-option');
+            
+            paymentMethodOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    paymentMethodOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    selectedPaymentMethod = this.dataset.method;
+                    
+                    // Show COD notice if COD is selected
+                    const codNotice = document.getElementById('cod-notice');
+                    if (selectedPaymentMethod === 'cod') {
+                        codNotice.classList.add('show');
+                    } else {
+                        codNotice.classList.remove('show');
+                    }
+                });
+            });
+        });
+
+        // Process payment
+        function processPayment() {
+            if (cart.length === 0) {
+                showNotification('Keranjang belanja Anda kosong');
+                return;
+            }
+            
+            const name = document.getElementById('payment-name').value;
+            const contact = document.getElementById('payment-contact').value;
+            const email = document.getElementById('payment-email').value;
+            const address = document.getElementById('payment-address').value;
+            
+            if (!name || !contact || !email || !address) {
+                showNotification('Harap lengkapi semua data pembayaran');
+                return;
+            }
+            
+            if (!selectedPaymentMethod) {
+                showNotification('Harap pilih metode pembayaran');
+                return;
+            }
+            
+            // Calculate total
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+            });
+            
+            // Save order to Firestore
+            const user = auth.currentUser;
+            if (user) {
+                showLoadingSpinner();
+                
+                const orderData = {
+                    userId: user.uid,
+                    items: cart,
+                    customerInfo: {
+                        name: name,
+                        contact: contact,
+                        email: email,
+                        address: address
+                    },
+                    paymentMethod: selectedPaymentMethod,
+                    total: total,
+                    status: 'pending',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                db.collection("orders").add(orderData)
+                    .then((docRef) => {
+                        console.log("Order saved with ID: ", docRef.id);
+                        
+                        // Create order summary for WhatsApp
+                        let orderSummary = 'Halo, saya ingin melakukan pesanan:\n\n';
+                        cart.forEach(item => {
+                            orderSummary += `- ${item.name} (Size: ${item.size}, Qty: ${item.quantity}) = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n`;
+                        });
+                        orderSummary += `\nTotal: Rp ${total.toLocaleString('id-ID')}\n\n`;
+                        orderSummary += `Data Pembayaran:\n`;
+                        orderSummary += `Nama: ${name}\n`;
+                        orderSummary += `Kontak: ${contact}\n`;
+                        orderSummary += `Email: ${email}\n`;
+                        orderSummary += `Alamat: ${address}\n`;
+                        orderSummary += `Metode Pembayaran: ${selectedPaymentMethod.toUpperCase()}\n`;
+                        orderSummary += `Order ID: ${docRef.id}\n`;
+                        
+                        // Encode for WhatsApp URL
+                        const encodedMessage = encodeURIComponent(orderSummary);
+                        const whatsappUrl = `https://wa.me/628123456789?text=${encodedMessage}`;
+                        
+                        // Open WhatsApp
+                        window.open(whatsappUrl, '_blank');
+                        
+                        // Show notification
+                        showNotification('Pesanan Anda telah dibuat! Anda akan diarahkan ke WhatsApp untuk menyelesaikan pembayaran.');
+                        
+                        // Clear cart after successful order
+                        cart = [];
+                        updateCart();
+                        saveCartToFirestore();
+                        
+                        hideLoadingSpinner();
+                    })
+                    .catch((error) => {
+                        console.error("Error saving order: ", error);
+                        showNotification('Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
+                        hideLoadingSpinner();
+                    });
+            }
+        }
+
+        // Quantity selector
+        const quantityMinus = document.getElementById('quantity-minus');
+        const quantityPlus = document.getElementById('quantity-plus');
+        const quantitySpan = document.getElementById('quantity');
+        
+        quantityMinus.addEventListener('click', function() {
+            let quantity = parseInt(quantitySpan.textContent);
+            if (quantity > 1) {
+                quantity--;
+                quantitySpan.textContent = quantity;
+            }
+        });
+        
+        quantityPlus.addEventListener('click', function() {
+            let quantity = parseInt(quantitySpan.textContent);
+            quantity++;
+            quantitySpan.textContent = quantity;
+        });
+
+        // Size selector
+        const sizeOptions = document.querySelectorAll('.size-option');
+        
+        sizeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                sizeOptions.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Product thumbnails
+        const thumbnails = document.querySelectorAll('.product-detail-thumbnail');
+        const mainImage = document.getElementById('product-main-image');
+        
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', function() {
+                const imgSrc = this.querySelector('img').src;
+                mainImage.src = imgSrc;
+            });
+        });
+
+        // Contact form submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Save contact message to Firestore
+            const user = auth.currentUser;
+            if (user) {
+                showLoadingSpinner();
+                
+                const contactData = {
+                    userId: user.uid,
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                db.collection("contacts").add(contactData)
+                    .then((docRef) => {
+                        console.log("Contact message saved with ID: ", docRef.id);
+                        
+                        // Show notification
+                        showNotification('Pesan Anda telah berhasil dikirim!');
+                        
+                        // Reset form
+                        this.reset();
+                        
+                        hideLoadingSpinner();
+                    })
+                    .catch((error) => {
+                        console.error("Error saving contact message: ", error);
+                        showNotification('Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.');
+                        hideLoadingSpinner();
+                    });
+            }
+        });
+
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            if (email) {
+                // Save newsletter subscription to Firestore
+                const user = auth.currentUser;
+                if (user) {
+                    showLoadingSpinner();
+                    
+                    const newsletterData = {
+                        userId: user.uid,
+                        email: email,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    
+                    db.collection("newsletter").add(newsletterData)
+                        .then((docRef) => {
+                            console.log("Newsletter subscription saved with ID: ", docRef.id);
+                            
+                            // Show notification
+                            showNotification(`Terima kasih! Email ${email} telah berhasil didaftarkan.`);
+                            
+                            this.reset();
+                            
+                            hideLoadingSpinner();
+                        })
+                        .catch((error) => {
+                            console.error("Error saving newsletter subscription: ", error);
+                            showNotification('Terjadi kesalahan saat mendaftar newsletter. Silakan coba lagi.');
+                            hideLoadingSpinner();
+                        });
+                }
+            }
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const nav = document.querySelector('nav ul');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.position = 'absolute';
+                nav.style.top = '80px';
+                nav.style.left = '0';
+                nav.style.right = '0';
+                nav.style.flexDirection = 'column';
+                nav.style.backgroundColor = '#fff';
+                nav.style.padding = '20px';
+            }
+        });
+
+        // Show notification
+        function showNotification(message) {
+            // Remove existing notification if any
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchContainer.contains(e.target) && e.target !== searchIcon && e.target !== splashSearchIcon) {
+                searchContainer.classList.remove('active');
+                autocompleteResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
