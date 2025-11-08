@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>HEXHUSTLE | Official Store</title>
+    <title>HEXHUSTLE | Official Store - Streetwear Gothic & Urban Fashion Indonesia</title>
 
     <!-- 🔍 SEO Meta Tags -->
-    <meta name="description" content="HEXHUSTLE Official Store — fashion streetwear bergaya dark gothic dengan sentuhan urban dan kualitas premium. Temukan koleksi eksklusif kami sekarang.">
-    <meta name="keywords" content="HEXHUSTLE, streetwear, fashion gothic, pakaian urban, baju hitam, jaket, hoodie, clothing brand, fashion lokal">
+    <meta name="description" content="HEXHUSTLE Official Store — fashion streetwear bergaya dark gothic dengan sentuhan urban dan kualitas premium. Temukan koleksi eksklusif jaket, hoodie, dan t-shirt kami sekarang.">
+    <meta name="keywords" content="HEXHUSTLE, streetwear, fashion gothic, pakaian urban, baju hitam, jaket, hoodie, clothing brand, fashion lokal, jaket kulit, hoodie hitam">
     <meta name="author" content="HEXHUSTLE Official">
     <meta name="robots" content="index, follow">
 
     <!-- 🌐 Open Graph (untuk Facebook, WhatsApp, Instagram) -->
-    <meta property="og:title" content="HEXHUSTLE | Official Store">
+    <meta property="og:title" content="HEXHUSTLE | Official Store - Streetwear Gothic & Urban Fashion">
     <meta property="og:description" content="Koleksi pakaian streetwear bergaya gothic dan urban. Tampilkan sisi gelap dan kuatmu bersama HEXHUSTLE.">
     <meta property="og:image" content="https://hexahustle.vercel.app/favicon/hexahustle.png">
     <meta property="og:url" content="https://hexahustle.vercel.app">
@@ -21,9 +21,10 @@
 
     <!-- 🐦 Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="HEXHUSTLE | Official Store">
+    <meta name="twitter:title" content="HEXHUSTLE | Official Store - Streetwear Gothic & Urban Fashion">
     <meta name="twitter:description" content="Streetwear bergaya dark gothic dan urban. Temukan koleksi eksklusif HEXHUSTLE.">
     <meta name="twitter:image" content="https://hexahustle.vercel.app/favicon/hexahustle.png">
+    <meta name="google-site-verification" content="lo2i6ODbwu44PJEIBP84zXDCA8-lCORqVHopTyYjAOY" />
 
     <!-- 🧿 Favicon -->
     <link rel="icon" type="image/png" href="https://hexahustle.vercel.app/favicon/hexahustle.png">
@@ -35,6 +36,30 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "HEXHUSTLE",
+        "url": "https://hexahustle.vercel.app",
+        "logo": "https://hexahustle.vercel.app/favicon/hexahustle.png",
+        "description": "HEXHUSTLE Official Store — fashion streetwear bergaya dark gothic dengan sentuhan urban dan kualitas premium.",
+        "sameAs": [
+            "https://www.instagram.com/hexahustle",
+            "https://www.facebook.com/hexahustle",
+            "https://twitter.com/hexahustle"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+62-21-1234-5678",
+            "contactType": "customer service",
+            "availableLanguage": "Indonesian"
+        }
+    }
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -483,6 +508,117 @@
             padding: 50px 0;
         }
         
+        /* Filter Sidebar */
+        .filter-sidebar {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: #fff;
+            z-index: 1000;
+            transition: left 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .filter-sidebar.active {
+            left: 0;
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filter-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .close-filter {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .filter-section {
+            margin-bottom: 30px;
+        }
+        
+        .filter-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-option input {
+            margin-right: 10px;
+        }
+        
+        .filter-option label {
+            cursor: pointer;
+        }
+        
+        .price-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .price-filter input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #000;
+        }
+        
+        .apply-filters {
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .apply-filters:hover {
+            background-color: #333;
+        }
+        
+        .reset-filters {
+            width: 100%;
+            padding: 15px;
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #000;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-filters:hover {
+            background-color: #f5f5f5;
+        }
+        
         /* Page Content */
         .page {
             display: none;
@@ -554,14 +690,17 @@
             color: #000;
         }
         
-        /* Featured Collection */
-        .featured {
+        /* Product Catalog with Infinite Scroll */
+        .product-catalog {
             padding: 80px 0;
         }
         
         .section-title {
             text-align: center;
             margin-bottom: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .section-title h2 {
@@ -571,38 +710,125 @@
             margin-bottom: 10px;
         }
         
-        .products {
+        .section-title p {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .filter-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border: 1px solid #000;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-toggle:hover {
+            background-color: #fff;
+        }
+        
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
         }
         
         .product-card {
-            text-align: center;
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
+            border: 1px solid #fff;
         }
         
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
         
-        .product-img {
-            height: 350px;
-            background-color: #fff;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .product-image {
+            flex: 1;
+            max-width: 500px;
+            height: 400px;
             overflow: hidden;
         }
         
-        .product-img img {
+        .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: all 0.5s ease;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .product-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .product-info p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .product-price .original-price {
+            font-size: 1.2rem;
+            color: #888;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+        
+        .product-price .discount-price {
+            color: #ff0000;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .product-actions button {
+            padding: 10px 20px;
+            border: 1px solid #000;
+            background-color: #fff;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .product-actions .add-to-cart {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .product-actions button:hover {
+            background-color: #000;
+            color: #fff;
         }
         
         .discount-badge {
@@ -616,6 +842,35 @@
             font-weight: 600;
             font-size: 14px;
             z-index: 1;
+        }
+        
+        .load-more {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .load-more button {
+            padding: 15px 40px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .load-more button:hover {
+            background-color: #333;
+        }
+        
+        .loading-more {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .loading-more.active {
+            display: block;
         }
         
         /* Best Seller Section with Horizontal Scroll */
@@ -820,58 +1075,6 @@
         .buy-now:hover {
             background-color: #000;
             color: #fff;
-        }
-        
-        /* Categories Section */
-        .categories {
-            padding: 80px 0;
-            background-color: #fff;
-        }
-        
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .category-item {
-            height: 300px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #f5f5f5;
-            transition: all 0.3s ease;
-        }
-        
-        .category-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .category-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #000;
-        }
-        
-        .category-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #fff;
-            padding: 15px;
-            text-align: center;
-        }
-        
-        .category-overlay h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 1px;
         }
         
         /* Related Products */
@@ -1426,6 +1629,41 @@
             border: 1px solid #fff;
         }
         
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 20px 0;
+            font-size: 0.9rem;
+        }
+        
+        .breadcrumb-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .breadcrumb-item {
+            margin-right: 10px;
+        }
+        
+        .breadcrumb-item a {
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item a:hover {
+            color: #000;
+        }
+        
+        .breadcrumb-item.active {
+            color: #000;
+            font-weight: 500;
+        }
+        
+        .breadcrumb-item:not(:last-child)::after {
+            content: '>';
+            margin-left: 10px;
+            color: #666;
+        }
+        
         /* Responsive Styles */
         @media (max-width: 1024px) {
             .hero h1 {
@@ -1442,6 +1680,20 @@
             
             .payment-container {
                 grid-template-columns: 1fr;
+            }
+            
+            .product-card {
+                flex-direction: column;
+            }
+            
+            .product-image {
+                max-width: 100%;
+                height: 300px;
+            }
+            
+            .section-title {
+                flex-direction: column;
+                gap: 20px;
             }
         }
         
@@ -1469,6 +1721,11 @@
             .cart-sidebar {
                 width: 100%;
                 right: -100%;
+            }
+            
+            .filter-sidebar {
+                width: 100%;
+                left: -100%;
             }
             
             .search-container {
@@ -1525,10 +1782,6 @@
                 height: 200px;
             }
             
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .payment-method-options {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1540,6 +1793,12 @@
     <div class="loading-overlay" id="loading-overlay">
         <div class="pentagram-loader"></div>
     </div>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop autoplay>
+        <source src="https://hexahustle.vercel.app/sound/k.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <!-- Splash Screen -->
     <div class="splash-screen" id="splash-screen">
@@ -1625,6 +1884,94 @@ HexaHustle — your armor for the grind.</p>
         </div>
     </div>
 
+    <!-- Filter Sidebar -->
+    <div class="filter-sidebar" id="filter-sidebar">
+        <div class="filter-header">
+            <h2>FILTER PRODUK</h2>
+            <div class="close-filter" id="close-filter">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <h3>KATEGORI</h3>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-tshirts" value="tshirts">
+                    <label for="filter-tshirts">T-Shirts</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-hoodies" value="hoodies">
+                    <label for="filter-hoodies">Hoodies</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-pants" value="pants">
+                    <label for="filter-pants">Pants</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-accessories" value="accessories">
+                    <label for="filter-accessories">Accessories</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <h3>HARGA</h3>
+            <div class="price-filter">
+                <input type="number" id="min-price" placeholder="Min">
+                <span>-</span>
+                <input type="number" id="max-price" placeholder="Max">
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <h3>UKURAN</h3>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-size-s" value="S">
+                    <label for="filter-size-s">S</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-size-m" value="M">
+                    <label for="filter-size-m">M</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-size-l" value="L">
+                    <label for="filter-size-l">L</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-size-xl" value="XL">
+                    <label for="filter-size-xl">XL</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <h3>WARNA</h3>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-color-black" value="black">
+                    <label for="filter-color-black">Hitam</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-color-white" value="white">
+                    <label for="filter-color-white">Putih</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-color-gray" value="gray">
+                    <label for="filter-color-gray">Abu-abu</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-color-red" value="red">
+                    <label for="filter-color-red">Merah</label>
+                </div>
+            </div>
+        </div>
+        
+        <button class="apply-filters" onclick="applyFilters()">TERAPKAN FILTER</button>
+        <button class="reset-filters" onclick="resetFilters()">RESET FILTER</button>
+    </div>
+
     <!-- Home Page -->
     <div class="page active" id="home-page">
         <!-- Hero Section -->
@@ -1638,15 +1985,27 @@ Wear the darkness. Own the city.</p>
             </div>
         </section>
 
-        <!-- Featured Collection -->
-        <section class="featured">
+        <!-- Product Catalog with Infinite Scroll -->
+        <section class="product-catalog">
             <div class="container">
                 <div class="section-title">
-                    <h2>Koleksi Terbaru</h2>
-                    <p>Produk unggulan kami musim ini</p>
+                    <div>
+                        <h2>KATALOG PRODUK</h2>
+                        <p>Temukan koleksi eksklusif kami</p>
+                    </div>
+                    <div class="filter-toggle" id="filter-toggle">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter</span>
+                    </div>
                 </div>
-                <div class="products" id="featured-products">
+                <div class="products-grid" id="products-grid">
                     <!-- Products will be dynamically loaded here -->
+                </div>
+                <div class="load-more">
+                    <button id="load-more-btn">MUAT LEBIH BANYAK</button>
+                </div>
+                <div class="loading-more" id="loading-more">
+                    <i class="fas fa-spinner fa-spin"></i> Memuat lebih banyak produk...
                 </div>
             </div>
         </section>
@@ -1661,42 +2020,6 @@ Wear the darkness. Own the city.</p>
                 <div class="best-seller-container">
                     <div class="best-seller-products" id="best-seller-products">
                         <!-- Products will be dynamically loaded here -->
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Categories Section -->
-        <section class="categories">
-            <div class="container">
-                <div class="section-title">
-                    <h2>KATEGORI</h2>
-                    <p>Jelajahi koleksi kami berdasarkan kategori</p>
-                </div>
-                <div class="category-grid">
-                    <div class="category-item" onclick="showCategoryDetail('tshirts')">
-                        <i class="fas fa-tshirt category-icon"></i>
-                        <div class="category-overlay">
-                            <h3>T-SHIRTS</h3>
-                        </div>
-                    </div>
-                    <div class="category-item" onclick="showCategoryDetail('hoodies')">
-                        <i class="fas fa-tshirt category-icon"></i>
-                        <div class="category-overlay">
-                            <h3>HOODIES</h3>
-                        </div>
-                    </div>
-                    <div class="category-item" onclick="showCategoryDetail('pants')">
-                        <i class="fas fa-socks category-icon"></i>
-                        <div class="category-overlay">
-                            <h3>PANTS</h3>
-                        </div>
-                    </div>
-                    <div class="category-item" onclick="showCategoryDetail('accessories')">
-                        <i class="fas fa-glasses category-icon"></i>
-                        <div class="category-overlay">
-                            <h3>AKSESORIS</h3>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1719,6 +2042,17 @@ Wear the darkness. Own the city.</p>
 
     <!-- Product Detail Page -->
     <div class="page" id="product-detail-page">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('collection')">Koleksi</a></li>
+                    <li class="breadcrumb-item active" id="breadcrumb-product">Produk</li>
+                </ul>
+            </div>
+        </nav>
+        
         <section class="product-detail">
             <div class="container">
                 <div class="product-detail-container">
@@ -1788,6 +2122,17 @@ Wear the darkness. Own the city.</p>
 
     <!-- Category Detail Page -->
     <div class="page" id="category-detail-page">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('collection')">Koleksi</a></li>
+                    <li class="breadcrumb-item active" id="breadcrumb-category">Kategori</li>
+                </ul>
+            </div>
+        </nav>
+        
         <section class="category-detail">
             <div class="container">
                 <div class="category-header">
@@ -1817,6 +2162,16 @@ Wear the darkness. Own the city.</p>
 
     <!-- Collection Page -->
     <div class="page" id="collection-page">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li class="breadcrumb-item active">Koleksi</li>
+                </ul>
+            </div>
+        </nav>
+        
         <section class="collection">
             <div class="container">
                 <div class="collection-header">
@@ -1838,6 +2193,17 @@ Wear the darkness. Own the city.</p>
 
     <!-- Payment Page -->
     <div class="page" id="payment-page">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('collection')">Koleksi</a></li>
+                    <li class="breadcrumb-item active">Pembayaran</li>
+                </ul>
+            </div>
+        </nav>
+        
         <section class="payment">
             <div class="container">
                 <div class="payment-header">
@@ -1942,6 +2308,16 @@ Wear the darkness. Own the city.</p>
 
     <!-- Contact Page -->
     <div class="page" id="contact-page">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li class="breadcrumb-item active">Kontak</li>
+                </ul>
+            </div>
+        </nav>
+        
         <section class="contact">
             <div class="container">
                 <div class="contact-header">
@@ -2009,6 +2385,16 @@ Wear the darkness. Own the city.</p>
 
     <!-- Search Results Page -->
     <div class="page" id="search-results-page">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li class="breadcrumb-item active">Hasil Pencarian</li>
+                </ul>
+            </div>
+        </nav>
+        
         <section class="search-results">
             <div class="container">
                 <div class="search-results-header">
@@ -2024,6 +2410,16 @@ Wear the darkness. Own the city.</p>
 
     <!-- About Page -->
     <div class="page" id="about-page">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li class="breadcrumb-item active">Tentang Kami</li>
+                </ul>
+            </div>
+        </nav>
+        
         <section class="featured">
             <div class="container">
                 <div class="section-title">
@@ -2177,6 +2573,15 @@ Wear the darkness. Own the city.</p>
             
             // Initialize cache
             initializeCache();
+            
+            // Initialize infinite scroll
+            initializeInfiniteScroll();
+            
+            // Play background music
+            playBackgroundMusic();
+            
+            // Initialize filter sidebar
+            initializeFilterSidebar();
         }
 
         // Sample product data
@@ -2278,6 +2683,10 @@ Wear the darkness. Own the city.</p>
         let selectedPaymentMethod = '';
         let currentProduct = null;
         let discountedProducts = [];
+        let productsLoaded = 0;
+        const productsPerLoad = 3;
+        let isLoadingMore = false;
+        let filteredProducts = [...products];
 
         // Initialize cache
         function initializeCache() {
@@ -2325,17 +2734,8 @@ Wear the darkness. Own the city.</p>
 
         // Load products
         function loadProducts() {
-            // Load featured products
-            const featuredProductsContainer = document.getElementById('featured-products');
-            featuredProductsContainer.innerHTML = '';
-            
-            // Get first 4 products for featured section
-            const featuredProducts = products.slice(0, 4);
-            
-            featuredProducts.forEach(product => {
-                const productCard = createProductCard(product);
-                featuredProductsContainer.appendChild(productCard);
-            });
+            // Load initial products for catalog
+            loadProductsForCatalog();
             
             // Load best seller products
             const bestSellerProductsContainer = document.getElementById('best-seller-products');
@@ -2352,6 +2752,75 @@ Wear the darkness. Own the city.</p>
             
             // Initialize collection page
             initCollectionPage();
+        }
+
+        // Load products for catalog with infinite scroll
+        function loadProductsForCatalog() {
+            const productsGrid = document.getElementById('products-grid');
+            
+            // If first load, clear container
+            if (productsLoaded === 0) {
+                productsGrid.innerHTML = '';
+            }
+            
+            // Determine how many products to load
+            const endIndex = Math.min(productsLoaded + productsPerLoad, filteredProducts.length);
+            
+            // Load products
+            for (let i = productsLoaded; i < endIndex; i++) {
+                const product = filteredProducts[i];
+                const productCard = createCatalogProductCard(product);
+                productsGrid.appendChild(productCard);
+            }
+            
+            // Update loaded count
+            productsLoaded = endIndex;
+            
+            // Hide load more button if all products are loaded
+            if (productsLoaded >= filteredProducts.length) {
+                document.getElementById('load-more-btn').style.display = 'none';
+            }
+        }
+
+        // Create product card for catalog
+        function createCatalogProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.onclick = () => showProductDetail(product.id);
+            
+            // Check if product has discount
+            const discount = getProductDiscount(product.id);
+            let discountBadge = '';
+            let priceDisplay = `<div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>`;
+            
+            if (discount > 0) {
+                const discountedPrice = Math.round(product.price * (1 - discount / 100));
+                discountBadge = `<div class="discount-badge">-${discount}%</div>`;
+                priceDisplay = `
+                    <div class="product-price">
+                        <span class="original-price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span class="discount-price">Rp ${discountedPrice.toLocaleString('id-ID')}</span>
+                    </div>
+                `;
+            }
+            
+            productCard.innerHTML = `
+                <div class="product-image">
+                    ${discountBadge}
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    ${priceDisplay}
+                    <div class="product-actions">
+                        <button class="add-to-catalog" onclick="event.stopPropagation(); addToCartFromCatalog('${product.id}')">TAMBAH KE KERANJANG</button>
+                        <button class="view-product" onclick="event.stopPropagation(); showProductDetail('${product.id}')">LIHAT DETAIL</button>
+                    </div>
+                </div>
+            `;
+            
+            return productCard;
         }
 
         // Create product card
@@ -2388,6 +2857,185 @@ Wear the darkness. Own the city.</p>
             `;
             
             return productCard;
+        }
+
+        // Add to cart from catalog
+        function addToCartFromCatalog(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                // Get actual price (discounted if applicable)
+                const discount = getProductDiscount(product.id);
+                const price = discount > 0 ? 
+                    Math.round(product.price * (1 - discount / 100)) : 
+                    product.price;
+                
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: price,
+                    originalPrice: product.price,
+                    image: product.image,
+                    quantity: 1,
+                    size: 'L',
+                    discount: discount
+                });
+                
+                updateCart();
+                saveCartToFirestore();
+                
+                // Show notification
+                showNotification('Produk berhasil ditambahkan ke keranjang');
+            }
+        }
+
+        // Initialize infinite scroll
+        function initializeInfiniteScroll() {
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            
+            loadMoreBtn.addEventListener('click', function() {
+                if (!isLoadingMore && productsLoaded < filteredProducts.length) {
+                    isLoadingMore = true;
+                    document.getElementById('loading-more').classList.add('active');
+                    
+                    // Simulate loading delay
+                    setTimeout(() => {
+                        loadProductsForCatalog();
+                        isLoadingMore = false;
+                        document.getElementById('loading-more').classList.remove('active');
+                    }, 1000);
+                }
+            });
+            
+            // Implement actual infinite scroll
+            window.addEventListener('scroll', function() {
+                if (!isLoadingMore && productsLoaded < filteredProducts.length) {
+                    const scrollPosition = window.innerHeight + window.scrollY;
+                    const documentHeight = document.documentElement.offsetHeight;
+                    
+                    // Load more when user is near bottom of page
+                    if (scrollPosition >= documentHeight - 500) {
+                        isLoadingMore = true;
+                        document.getElementById('loading-more').classList.add('active');
+                        
+                        // Simulate loading delay
+                        setTimeout(() => {
+                            loadProductsForCatalog();
+                            isLoadingMore = false;
+                            document.getElementById('loading-more').classList.remove('active');
+                        }, 1000);
+                    }
+                }
+            });
+        }
+
+        // Initialize filter sidebar
+        function initializeFilterSidebar() {
+            const filterToggle = document.getElementById('filter-toggle');
+            const filterSidebar = document.getElementById('filter-sidebar');
+            const closeFilter = document.getElementById('close-filter');
+            
+            filterToggle.addEventListener('click', function() {
+                filterSidebar.classList.add('active');
+            });
+            
+            closeFilter.addEventListener('click', function() {
+                filterSidebar.classList.remove('active');
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const categoryFilters = [];
+            const sizeFilters = [];
+            const colorFilters = [];
+            const minPrice = parseInt(document.getElementById('min-price').value) || 0;
+            const maxPrice = parseInt(document.getElementById('max-price').value) || Infinity;
+            
+            // Get selected categories
+            if (document.getElementById('filter-tshirts').checked) categoryFilters.push('tshirts');
+            if (document.getElementById('filter-hoodies').checked) categoryFilters.push('hoodies');
+            if (document.getElementById('filter-pants').checked) categoryFilters.push('pants');
+            if (document.getElementById('filter-accessories').checked) categoryFilters.push('accessories');
+            
+            // Get selected sizes
+            if (document.getElementById('filter-size-s').checked) sizeFilters.push('S');
+            if (document.getElementById('filter-size-m').checked) sizeFilters.push('M');
+            if (document.getElementById('filter-size-l').checked) sizeFilters.push('L');
+            if (document.getElementById('filter-size-xl').checked) sizeFilters.push('XL');
+            
+            // Get selected colors
+            if (document.getElementById('filter-color-black').checked) colorFilters.push('black');
+            if (document.getElementById('filter-color-white').checked) colorFilters.push('white');
+            if (document.getElementById('filter-color-gray').checked) colorFilters.push('gray');
+            if (document.getElementById('filter-color-red').checked) colorFilters.push('red');
+            
+            // Filter products
+            filteredProducts = products.filter(product => {
+                // Filter by category
+                if (categoryFilters.length > 0 && !categoryFilters.includes(product.category)) {
+                    return false;
+                }
+                
+                // Filter by price
+                if (product.price < minPrice || product.price > maxPrice) {
+                    return false;
+                }
+                
+                // Note: In a real application, you would have size and color properties in the product data
+                // For this demo, we're only filtering by category and price
+                
+                return true;
+            });
+            
+            // Reset loaded count and reload products
+            productsLoaded = 0;
+            loadProductsForCatalog();
+            
+            // Close filter sidebar
+            document.getElementById('filter-sidebar').classList.remove('active');
+            
+            // Show notification
+            showNotification(`Filter diterapkan. Menampilkan ${filteredProducts.length} produk.`);
+        }
+
+        // Reset filters
+        function resetFilters() {
+            // Reset all checkboxes
+            document.querySelectorAll('.filter-option input').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Reset price inputs
+            document.getElementById('min-price').value = '';
+            document.getElementById('max-price').value = '';
+            
+            // Reset filtered products
+            filteredProducts = [...products];
+            
+            // Reset loaded count and reload products
+            productsLoaded = 0;
+            loadProductsForCatalog();
+            
+            // Close filter sidebar
+            document.getElementById('filter-sidebar').classList.remove('active');
+            
+            // Show notification
+            showNotification('Filter direset. Menampilkan semua produk.');
+        }
+
+        // Play background music
+        function playBackgroundMusic() {
+            const bgMusic = document.getElementById('bg-music');
+            
+            // Most browsers block autoplay, so we'll handle it with user interaction
+            document.addEventListener('click', function initAudio() {
+                bgMusic.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+                
+                // Remove event listener after first interaction
+                document.removeEventListener('click', initAudio);
+            }, { once: true });
         }
 
         // Check for discounted products
@@ -2609,6 +3257,12 @@ Wear the darkness. Own the city.</p>
                     header.classList.add('header-transparent');
                 }
             });
+            
+            // Try to play background music
+            const bgMusic = document.getElementById('bg-music');
+            bgMusic.play().catch(e => {
+                console.log('Audio play failed:', e);
+            });
         }
 
         // Page navigation
@@ -2656,6 +3310,12 @@ Wear the darkness. Own the city.</p>
                 // Save to recently viewed
                 saveToRecentlyViewed(productId);
                 
+                // Update breadcrumb
+                document.getElementById('breadcrumb-product').textContent = product.name;
+                
+                // Add product schema
+                addProductSchema(product);
+                
                 document.getElementById('product-name').textContent = product.name;
                 document.getElementById('product-description').textContent = product.description;
                 document.getElementById('product-main-image').src = product.image;
@@ -2692,6 +3352,51 @@ Wear the darkness. Own the city.</p>
                 
                 showPage('product-detail');
             }
+        }
+
+        // Add product schema
+        function addProductSchema(product) {
+            // Remove existing product schema if any
+            const existingSchema = document.querySelector('script[type="application/ld+json"][data-product]');
+            if (existingSchema) {
+                existingSchema.remove();
+            }
+            
+            // Create new product schema
+            const script = document.createElement('script');
+            script.type = 'application/ld+json';
+            script.setAttribute('data-product', 'true');
+            
+            const discount = getProductDiscount(product.id);
+            const price = discount > 0 ? 
+                Math.round(product.price * (1 - discount / 100)) : 
+                product.price;
+            
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": product.name,
+                "image": product.image,
+                "description": product.description,
+                "brand": {
+                    "@type": "Brand",
+                    "name": "HEXHUSTLE"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": price,
+                    "priceCurrency": "IDR",
+                    "availability": "https://schema.org/InStock"
+                }
+            };
+            
+            if (discount > 0) {
+                schema.offers.highPrice = product.price;
+                schema.offers.lowPrice = price;
+            }
+            
+            script.textContent = JSON.stringify(schema);
+            document.head.appendChild(script);
         }
 
         // Save to recently viewed
@@ -2756,6 +3461,9 @@ Wear the darkness. Own the city.</p>
                 'pants': 'Koleksi celana dengan potongan modern dan bahan yang fleksibel',
                 'accessories': 'Koleksi aksesoris untuk melengkapi gaya urban Anda'
             };
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumb-category').textContent = categoryNames[categoryId];
             
             document.getElementById('category-name').textContent = categoryNames[categoryId];
             document.getElementById('category-description').textContent = categoryDescriptions[categoryId];
@@ -2995,7 +3703,7 @@ Wear the darkness. Own the city.</p>
             if (existingItem) {
                 existingItem.quantity += parseInt(document.getElementById('quantity').textContent);
             } else {
-                // Get the actual price (discounted if applicable)
+                // Get actual price (discounted if applicable)
                 const discount = getProductDiscount(currentProduct.id);
                 const price = discount > 0 ? 
                     Math.round(currentProduct.price * (1 - discount / 100)) : 
@@ -3029,7 +3737,7 @@ Wear the darkness. Own the city.</p>
             // Clear cart first
             cart = [];
             
-            // Get the actual price (discounted if applicable)
+            // Get actual price (discounted if applicable)
             const discount = getProductDiscount(currentProduct.id);
             const price = discount > 0 ? 
                 Math.round(currentProduct.price * (1 - discount / 100)) : 
