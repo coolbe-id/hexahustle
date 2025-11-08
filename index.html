@@ -36,6 +36,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
     
     <!-- Schema.org Markup -->
     <script type="application/ld+json">
@@ -915,6 +916,49 @@
         .best-seller-product {
             width: 280px;
             flex-shrink: 0;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #fff;
+            position: relative;
+        }
+        
+        .best-seller-product:hover {
+            transform: translateY(-5px);
+        }
+        
+        .best-seller-product .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .best-seller-product .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .best-seller-product:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .best-seller-product .product-info {
+            padding: 15px;
+        }
+        
+        .best-seller-product .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .best-seller-product .product-info p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
         }
         
         /* Product Detail */
@@ -1093,6 +1137,52 @@
             gap: 20px;
         }
         
+        .related-product {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #fff;
+            position: relative;
+        }
+        
+        .related-product:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-product .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .related-product .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .related-product:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .related-product .product-info {
+            padding: 15px;
+        }
+        
+        .related-product .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .related-product .product-info p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
         /* Category Detail */
         .category-detail {
             padding: 80px 0;
@@ -1157,7 +1247,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 50px;
-            border-bottom: 1px solid#eee;
+            border-bottom: 1px solid #eee;
             flex-wrap: wrap;
         }
         
@@ -1184,6 +1274,58 @@
             right: 0;
             height: 2px;
             background-color: #000;
+        }
+        
+        .collection-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .collection-product {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #fff;
+            position: relative;
+        }
+        
+        .collection-product:hover {
+            transform: translateY(-5px);
+        }
+        
+        .collection-product .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .collection-product .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .collection-product:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .collection-product .product-info {
+            padding: 15px;
+        }
+        
+        .collection-product .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .collection-product .product-info p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
         }
         
         /* Contact Page */
@@ -1295,6 +1437,58 @@
         
         .search-results-header p {
             color: #666;
+        }
+        
+        .search-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .search-product {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #fff;
+            position: relative;
+        }
+        
+        .search-product:hover {
+            transform: translateY(-5px);
+        }
+        
+        .search-product .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .search-product .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .search-product:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .search-product .product-info {
+            padding: 15px;
+        }
+        
+        .search-product .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .search-product .product-info p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
         }
         
         /* Newsletter Section */
@@ -1854,7 +2048,7 @@ HexaHustle — your armor for the grind.</p>
     <!-- Header -->
     <header id="header">
         <div class="container header-container">
-            <div class="logo" onclick="showPage('home')">HEXAHUSTLE</div>
+            <div class="logo" onclick="showPage('home')">HEXHUSTLE</div>
             <nav>
                 <ul>
                     <li><a href="#" onclick="showPage('collection')">KOLEKSI</a></li>
@@ -2086,32 +2280,32 @@ Wear the darkness. Own the city.</p>
                 <div class="product-detail-container">
                     <div class="product-detail-images">
                         <div class="product-detail-main-img">
-                            <img id="product-main-image" src="https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg" alt="Product Image">
+                            <img id="product-main-image" src="" alt="Product Image">
                         </div>
                         <div class="product-detail-thumbnails">
                             <div class="product-detail-thumbnail">
-                                <img src="https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg" alt="Product Thumbnail 1">
+                                <img src="" alt="Product Thumbnail 1">
                             </div>
                             <div class="product-detail-thumbnail">
-                                <img src="https://i.ibb.co.com/tTkJj8wD/IMG-20251106-WA0033.jpg" alt="Product Thumbnail 2">
+                                <img src="" alt="Product Thumbnail 2">
                             </div>
                             <div class="product-detail-thumbnail">
-                                <img src="https://i.ibb.co.com/xtcbG2TT/IMG-20251106-WA0036.jpg" alt="Product Thumbnail 3">
+                                <img src="" alt="Product Thumbnail 3">
                             </div>
                             <div class="product-detail-thumbnail">
-                                <img src="https://i.ibb.co.com/mV4RtwPh/IMG-20251106-WA0035.jpg" alt="Product Thumbnail 4">
+                                <img src="" alt="Product Thumbnail 4">
                             </div>
                         </div>
                     </div>
                     <div class="product-detail-info">
-                        <h1 id="product-name">Hexareign Shadow Set</h1>
+                        <h1 id="product-name">Nama Produk</h1>
                         <div class="price" id="product-price">
                             <span class="original-price" id="original-price" style="display: none;">Rp 0</span>
                             <span class="discount-price" id="discount-price" style="display: none;">Rp 0</span>
                             <span id="normal-price">Rp 0</span>
                         </div>
                         <div class="description" id="product-description">
-                            Setelan premium dengan desain minimalis dan bahan berkualitas tinggi. Cocok untuk gaya urban yang simpel namun tetap stylish.
+                            Deskripsi produk akan ditampilkan di sini.
                         </div>
                         <div class="product-options">
                             <h3>UKURAN</h3>
@@ -2169,7 +2363,7 @@ Wear the darkness. Own the city.</p>
                 </div>
                 <div class="filter-options">
                     <div class="filter-count">
-                        <span id="product-count">8</span> Produk
+                        <span id="product-count">0</span> Produk
                     </div>
                     <div class="filter-sort">
                         <span>Urutkan:</span>
@@ -2212,7 +2406,7 @@ Wear the darkness. Own the city.</p>
                     <div class="collection-tab" onclick="filterCollection('bestseller')">TERLARIS</div>
                     <div class="collection-tab" onclick="filterCollection('sale')">DISKON</div>
                 </div>
-                <div class="products" id="collection-products">
+                <div class="collection-products" id="collection-products">
                     <!-- Products will be dynamically loaded here -->
                 </div>
             </div>
@@ -2271,7 +2465,7 @@ Wear the darkness. Own the city.</p>
                                 <input type="tel" id="payment-contact" name="contact" required>
                             </div>
                             <div class="form-group">
-                                <label for="payment-email">Email</label>
+                                <label for="payment-email">WhatsApp</label>
                                 <input type="email" id="payment-email" name="email" required>
                             </div>
                             <div class="form-group">
@@ -2429,7 +2623,7 @@ Wear the darkness. Own the city.</p>
                     <h1>HASIL PENCARIAN</h1>
                     <p>Menampilkan hasil untuk "<span id="search-query"></span>"</p>
                 </div>
-                <div class="products" id="search-results-products">
+                <div class="search-products" id="search-results-products">
                     <!-- Products will be dynamically loaded here -->
                 </div>
             </div>
@@ -2539,6 +2733,20 @@ Wear the darkness. Own the city.</p>
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Global variables
+        let products = [];
+        let bestSellers = [];
+        let cart = [];
+        let selectedPaymentMethod = '';
+        let currentProduct = null;
+        let discountedProducts = [];
+        let productsLoaded = 0;
+        const productsPerLoad = 3;
+        let isLoadingMore = false;
+        let filteredProducts = [];
+        let currentUser = null;
 
         // Anonymous authentication
         function signInAnonymously() {
@@ -2547,6 +2755,7 @@ Wear the darkness. Own the city.</p>
                 .then((userCredential) => {
                     // Signed in anonymously
                     const user = userCredential.user;
+                    currentUser = user;
                     console.log("Anonymous user signed in:", user.uid);
                     
                     // Store user data in Firestore
@@ -2555,6 +2764,11 @@ Wear the darkness. Own the city.</p>
                         isAnonymous: true
                     }).then(() => {
                         console.log("User data saved to Firestore");
+                        
+                        // Load data from Firebase
+                        loadProductsFromFirebase();
+                        loadCartFromFirebase();
+                        
                         hideLoadingSpinner();
                     }).catch((error) => {
                         console.error("Error saving user data:", error);
@@ -2573,10 +2787,12 @@ Wear the darkness. Own the city.</p>
         auth.onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in
+                currentUser = user;
                 console.log("User is signed in:", user.uid);
                 
-                // Load cart data from Firestore
-                loadCartFromFirestore();
+                // Load data from Firebase
+                loadProductsFromFirebase();
+                loadCartFromFirebase();
                 
                 // Initialize app
                 initializeApp();
@@ -2588,9 +2804,6 @@ Wear the darkness. Own the city.</p>
 
         // Initialize app
         function initializeApp() {
-            // Load products from cache or API
-            loadProducts();
-            
             // Check for discounted products
             checkDiscountedProducts();
             
@@ -2608,6 +2821,229 @@ Wear the darkness. Own the city.</p>
             
             // Initialize filter sidebar
             initializeFilterSidebar();
+        }
+
+        // Load products from Firebase
+        function loadProductsFromFirebase() {
+            showLoadingSpinner();
+            
+            // Create sample products if Firebase collection is empty
+            const sampleProducts = [
+                {
+                    name: "HEXAGON T-SHIRT",
+                    description: "Kaos dengan desain hexagon yang unik dan minimalis. Terbuat dari bahan katun berkualitas tinggi yang nyaman dipakai sehari-hari.",
+                    price: 250000,
+                    image: "https://picsum.photos/seed/hexagon/500/500.jpg",
+                    category: "tshirts",
+                    stock: 20,
+                    salesCount: 15,
+                    viewCount: 45,
+                    rating: 4.5
+                },
+                {
+                    name: "SHADOW HOODIE",
+                    description: "Hoodie dengan desain shadow yang memberikan kesan misterius. Cocok untuk gaya urban Anda.",
+                    price: 350000,
+                    image: "https://picsum.photos/seed/shadow/500/500.jpg",
+                    category: "hoodies",
+                    stock: 15,
+                    salesCount: 12,
+                    viewCount: 38,
+                    rating: 4.7
+                },
+                {
+                    name: "URBAN PANTS",
+                    description: "Celana dengan potongan modern yang nyaman dan stylish. Cocok untuk berbagai aktivitas.",
+                    price: 400000,
+                    image: "https://picsum.photos/seed/urban/500/500.jpg",
+                    category: "pants",
+                    stock: 10,
+                    salesCount: 8,
+                    viewCount: 25,
+                    rating: 4.3
+                },
+                {
+                    name: "DARK CAP",
+                    description: "Topi dengan desain minimalis yang melengkapi gaya urban Anda. Terbuat dari bahan berkualitas tinggi.",
+                    price: 150000,
+                    image: "https://picsum.photos/seed/cap/500/500.jpg",
+                    category: "accessories",
+                    stock: 25,
+                    salesCount: 20,
+                    viewCount: 55,
+                    rating: 4.6
+                },
+                {
+                    name: "NIGHT T-SHIRT",
+                    description: "Kaos dengan desain night yang memberikan kesan elegan. Terbuat dari bahan katun berkualitas tinggi.",
+                    price: 275000,
+                    image: "https://picsum.photos/seed/night/500/500.jpg",
+                    category: "tshirts",
+                    stock: 18,
+                    salesCount: 10,
+                    viewCount: 30,
+                    rating: 4.4
+                },
+                {
+                    name: "STREET HOODIE",
+                    description: "Hoodie dengan desain street yang modern dan trendy. Cocok untuk gaya urban Anda.",
+                    price: 375000,
+                    image: "https://picsum.photos/seed/street/500/500.jpg",
+                    category: "hoodies",
+                    stock: 12,
+                    salesCount: 9,
+                    viewCount: 28,
+                    rating: 4.5
+                }
+            ];
+            
+            db.collection("products").get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        // If collection is empty, add sample products
+                        console.log("No products found, adding sample products");
+                        
+                        const batch = db.batch();
+                        
+                        sampleProducts.forEach(product => {
+                            const docRef = db.collection("products").doc();
+                            batch.set(docRef, {
+                                ...product,
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                        });
+                        
+                        batch.commit().then(() => {
+                            console.log("Sample products added");
+                            // Reload products after adding
+                            loadProductsFromFirebase();
+                        }).catch(error => {
+                            console.error("Error adding sample products:", error);
+                            hideLoadingSpinner();
+                        });
+                    } else {
+                        products = [];
+                        querySnapshot.forEach((doc) => {
+                            const product = {
+                                id: doc.id,
+                                ...doc.data()
+                            };
+                            products.push(product);
+                        });
+                        
+                        // Calculate best sellers using algorithm
+                        calculateBestSellers();
+                        
+                        // Update UI with products
+                        loadProducts();
+                        
+                        hideLoadingSpinner();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading products:", error);
+                    hideLoadingSpinner();
+                    
+                    // If there's an error loading from Firebase, show a notification
+                    showNotification("Terjadi kesalahan saat memuat produk. Silakan coba lagi.");
+                });
+        }
+
+        // Calculate best sellers using algorithm
+        function calculateBestSellers() {
+            // Reset best sellers array
+            bestSellers = [];
+            
+            // Create a copy of products to calculate scores
+            const productsWithScore = products.map(product => {
+                // Calculate score based on various factors
+                let score = 0;
+                
+                // Base score from sales count (default to 0 if not available)
+                const salesCount = product.salesCount || 0;
+                score += salesCount * 5;
+                
+                // View count factor
+                const viewCount = product.viewCount || 0;
+                score += viewCount * 0.5;
+                
+                // Rating factor (out of 5)
+                const rating = product.rating || 0;
+                score += rating * 10;
+                
+                // Recency factor (newer products get a boost)
+                if (product.createdAt) {
+                    const daysSinceCreation = (new Date() - product.createdAt.toDate()) / (1000 * 60 * 60 * 24);
+                    if (daysSinceCreation < 30) {
+                        score += 15; // Boost for new products
+                    } else if (daysSinceCreation < 90) {
+                        score += 8; // Smaller boost for recent products
+                    }
+                }
+                
+                // Discount factor (products with discount get a boost)
+                if (product.discount && product.discount > 0) {
+                    score += product.discount * 2;
+                }
+                
+                // Stock factor (low stock can indicate popularity)
+                if (product.stock !== undefined && product.stock < 10) {
+                    score += 5;
+                }
+                
+                return {
+                    ...product,
+                    bestSellerScore: score
+                };
+            });
+            
+            // Sort by score in descending order
+            productsWithScore.sort((a, b) => b.bestSellerScore - a.bestSellerScore);
+            
+            // Take top 5 as best sellers
+            bestSellers = productsWithScore.slice(0, 5);
+            
+            // Update bestSeller flag in products
+            products.forEach(product => {
+                product.bestseller = bestSellers.some(bestSeller => bestSeller.id === product.id);
+            });
+            
+            console.log("Best sellers calculated:", bestSellers);
+        }
+
+        // Load products from Firebase
+        function loadCartFromFirebase() {
+            if (!currentUser) return;
+            
+            db.collection("carts").doc(currentUser.uid).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        cart = doc.data().items || [];
+                        updateCart();
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading cart:", error);
+                });
+        }
+
+        // Save cart data to Firebase
+        function saveCartToFirebase() {
+            if (!currentUser) return;
+            
+            db.collection("carts").doc(currentUser.uid).set({
+                items: cart,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+                console.log("Cart saved to Firestore");
+            })
+            .catch((error) => {
+                console.error("Error saving cart:", error);
+            });
+            
+            // Also save to localStorage for caching
+            localStorage.setItem('hexahustle_cart', JSON.stringify(cart));
         }
 
         // Initialize background music with Page Visibility API
@@ -2649,129 +3085,8 @@ Wear the darkness. Own the city.</p>
             });
         }
 
-        // Sample product data
-        const products = [
-            {
-                id: 'hexahustle-shadowset',
-                name: 'Hexareign Shadow Set',
-                price: 546000,
-                category: 'tshirts',
-                image: 'https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg',
-                description: 'Masuki dimensi gelap penuh karakter dengan Hexareign Shadow Set — kombinasi sempurna antara kekuatan dan ketenangan dalam gaya urban gothic.',
-                bestseller: true
-            },
-            {
-                id: 'hexahustle-obsidian',
-                name: 'Hexahustle Obsidian Long Sleeve',
-                price: 250000,
-                category: 'hoodies',
-                image: 'https://i.ibb.co.com/tTkJj8wD/IMG-20251106-WA0033.jpg',
-                description: 'Kesederhanaan yang gelap— Hexareign Obsidian Crewneck dirancang untuk mereka yang hidup di antara bayangan dan sorotan.',
-                bestseller: true
-            },
-            {
-                id: 'hexahustle-little',
-                name: 'Hexahustle Little Reign Tee',
-                price: 150000,
-                category: 'pants',
-                image: 'https://i.ibb.co.com/xtcbG2TT/IMG-20251106-WA0036.jpg',
-                description: 'Perpaduan antara ketegasan dan ketenangan dalam versi mini.',
-                bestseller: false
-            },
-            {
-                id: 'hexahustle-throne',
-                name: 'hexahustle Throne Tee',
-                price: 250000,
-                category: 'accessories',
-                image: 'https://i.ibb.co.com/mV4RtwPh/IMG-20251106-WA0035.jpg',
-                description: 'Di balik setiap bayangan, ada sosok yang memerintah.',
-                bestseller: false
-            },
-            {
-                id: 'hexahustle-venom',
-                name: 'Hexahustle Venom Chain Jacket',
-                price: 380000,
-                category: 'tshirts',
-                image: 'https://i.ibb.co.com/WpD2XSmM/IMG-20251106-WA0038.jpg',
-                description: 'Ketika kegelapan berpadu dengan kekuatan— lahirlah Hexareign Venom Chain Jacket.',
-                bestseller: true
-            },
-            {
-                id: 'hexahustle-devilshade',
-                name: 'Hexahustle Devilshade Fleece Hoodie',
-                price: 450000,
-                category: 'hoodies',
-                image: 'https://i.ibb.co.com/VYTZ5gg4/IMG-20251106-WA0037.jpg',
-                description: 'Bayangan yang hidup dalam bentuk hoodie.',
-                bestseller: true
-            },
-            {
-                id: 'hexahustle-dominion',
-                name: 'Hexahustle Dominion Spiked Jacket',
-                price: 375000,
-                category: 'pants',
-                image: 'https://i.ibb.co.com/Gf9DKgDC/IMG-20251106-WA0039.jpg',
-                description: 'Hexareign Dominion Spiked Jacket adalah manifestasi dari kekuasaan dan perlawanan dalam bentuk kain.',
-                bestseller: false
-            },
-            {
-                id: 'hexahustle-shadowscore',
-                name: 'Hexahustle ShadowCore Set',
-                price: 1230000,
-                category: 'accessories',
-                image: 'https://i.ibb.co.com/kgFCjbFS/IMG-20251106-WA0041.jpg',
-                description: 'Tunjukkan sisi gelap dan berani lo dengan Shadowcore Set dari HexaHustle.Hoodie oversized dengan logo tegas berpadu dengan celana loose fit yang nyaman, menciptakan tampilan gothic street yang autentik.',
-                bestseller: false
-            },
-            {
-                id: 'hexahustle-dark',
-                name: 'Hexahustle Dark Ritual Long Sleeve',
-                price: 250000,
-                category: 'tshirts',
-                image: 'https://i.ibb.co.com/Pv8xgpJr/IMG-20251106-WA0040.jpg',
-                description: 'Koleksi Dark Ritual dari HexaHustle hadir buat lo yang hidup di antara bayangan dan seni.',
-                bestseller: true
-            },
-            {
-                id: 'hexahustle-mono',
-                name: 'Hexahustle "Mono Reign" Crewneck Set',
-                price: 450000,
-                category: 'hoodies',
-                image: 'https://i.ibb.co.com/ycD75kk5/IMG-20251106-WA0042.jpg',
-                description: 'Minimalis tapi penuh wibawa— Mono Reign dari HexaHustle hadir buat lo yang menghargai ketenangan dalam dominasi hitam.',
-                bestseller: true
-            }
-        ];
-
-        // Cart data
-        let cart = [];
-        let selectedPaymentMethod = '';
-        let currentProduct = null;
-        let discountedProducts = [];
-        let productsLoaded = 0;
-        const productsPerLoad = 3;
-        let isLoadingMore = false;
-        let filteredProducts = [...products];
-
         // Initialize cache
         function initializeCache() {
-            // Check if products are cached
-            const cachedProducts = localStorage.getItem('hexahustle_products');
-            if (cachedProducts) {
-                // Use cached products
-                const cachedData = JSON.parse(cachedProducts);
-                if (cachedData.timestamp && (Date.now() - cachedData.timestamp < 3600000)) { // Cache for 1 hour
-                    // Use cached data
-                    console.log('Using cached products');
-                } else {
-                    // Cache expired, update it
-                    updateProductCache();
-                }
-            } else {
-                // No cache, create it
-                updateProductCache();
-            }
-            
             // Check if cart is cached
             const cachedCart = localStorage.getItem('hexahustle_cart');
             if (cachedCart) {
@@ -2787,18 +3102,11 @@ Wear the darkness. Own the city.</p>
             }
         }
 
-        // Update product cache
-        function updateProductCache() {
-            const cacheData = {
-                products: products,
-                timestamp: Date.now()
-            };
-            localStorage.setItem('hexahustle_products', JSON.stringify(cacheData));
-            console.log('Product cache updated');
-        }
-
         // Load products
         function loadProducts() {
+            // Initialize filtered products with all products
+            filteredProducts = [...products];
+            
             // Load initial products for catalog
             loadProductsForCatalog();
             
@@ -2806,12 +3114,8 @@ Wear the darkness. Own the city.</p>
             const bestSellerProductsContainer = document.getElementById('best-seller-products');
             bestSellerProductsContainer.innerHTML = '';
             
-            // Get best seller products
-            const bestSellerProducts = products.filter(p => p.bestseller);
-            
-            bestSellerProducts.forEach(product => {
-                const productCard = createProductCard(product);
-                productCard.classList.add('best-seller-product');
+            bestSellers.forEach(product => {
+                const productCard = createBestSellerProductCard(product);
                 bestSellerProductsContainer.appendChild(productCard);
             });
             
@@ -2888,10 +3192,10 @@ Wear the darkness. Own the city.</p>
             return productCard;
         }
 
-        // Create product card
-        function createProductCard(product) {
+        // Create product card for best seller section
+        function createBestSellerProductCard(product) {
             const productCard = document.createElement('div');
-            productCard.className = 'product-card';
+            productCard.className = 'best-seller-product';
             productCard.onclick = () => showProductDetail(product.id);
             
             // Check if product has discount
@@ -2924,10 +3228,160 @@ Wear the darkness. Own the city.</p>
             return productCard;
         }
 
+        // Create product card for collection page
+        function createCollectionProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'collection-product';
+            productCard.onclick = () => showProductDetail(product.id);
+            
+            // Check if product has discount
+            const discount = getProductDiscount(product.id);
+            let discountBadge = '';
+            let priceDisplay = `<p>Rp ${product.price.toLocaleString('id-ID')}</p>`;
+            
+            if (discount > 0) {
+                const discountedPrice = Math.round(product.price * (1 - discount / 100));
+                discountBadge = `<div class="discount-badge">-${discount}%</div>`;
+                priceDisplay = `
+                    <p>
+                        <span style="text-decoration: line-through; color: #888; margin-right: 5px;">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span style="color: #ff0000;">Rp ${discountedPrice.toLocaleString('id-ID')}</span>
+                    </p>
+                `;
+            }
+            
+            productCard.innerHTML = `
+                ${discountBadge}
+                <div class="product-img">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    ${priceDisplay}
+                </div>
+            `;
+            
+            return productCard;
+        }
+
+        // Create product card for related products
+        function createRelatedProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'related-product';
+            productCard.onclick = () => showProductDetail(product.id);
+            
+            // Check if product has discount
+            const discount = getProductDiscount(product.id);
+            let discountBadge = '';
+            let priceDisplay = `<p>Rp ${product.price.toLocaleString('id-ID')}</p>`;
+            
+            if (discount > 0) {
+                const discountedPrice = Math.round(product.price * (1 - discount / 100));
+                discountBadge = `<div class="discount-badge">-${discount}%</div>`;
+                priceDisplay = `
+                    <p>
+                        <span style="text-decoration: line-through; color: #888; margin-right: 5px;">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span style="color: #ff0000;">Rp ${discountedPrice.toLocaleString('id-ID')}</span>
+                    </p>
+                `;
+            }
+            
+            productCard.innerHTML = `
+                ${discountBadge}
+                <div class="product-img">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    ${priceDisplay}
+                </div>
+            `;
+            
+            return productCard;
+        }
+
+        // Create product card for search results
+        function createSearchProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'search-product';
+            productCard.onclick = () => showProductDetail(product.id);
+            
+            // Check if product has discount
+            const discount = getProductDiscount(product.id);
+            let discountBadge = '';
+            let priceDisplay = `<p>Rp ${product.price.toLocaleString('id-ID')}</p>`;
+            
+            if (discount > 0) {
+                const discountedPrice = Math.round(product.price * (1 - discount / 100));
+                discountBadge = `<div class="discount-badge">-${discount}%</div>`;
+                priceDisplay = `
+                    <p>
+                        <span style="text-decoration: line-through; color: #888; margin-right: 5px;">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span style="color: #ff0000;">Rp ${discountedPrice.toLocaleString('id-ID')}</span>
+                    </p>
+                `;
+            }
+            
+            productCard.innerHTML = `
+                ${discountBadge}
+                <div class="product-img">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    ${priceDisplay}
+                </div>
+            `;
+            
+            return productCard;
+        }
+
+        // Create product card for category detail
+        function createCategoryProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.onclick = () => showProductDetail(product.id);
+            
+        
+
+// Check if product has discount
+            const discount = getProductDiscount(product.id);
+            let discountBadge = '';
+            let priceDisplay = `<div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>`;
+            
+            if (discount > 0) {
+                const discountedPrice = Math.round(product.price * (1 - discount / 100));
+                discountBadge = `<div class="discount-badge">-${discount}%</div>`;
+                priceDisplay = `
+                    <div class="product-price">
+                        <span class="original-price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span class="discount-price">Rp ${discountedPrice.toLocaleString('id-ID')}</span>
+                    </div>
+                `;
+            }
+            
+            productCard.innerHTML = `
+                <div class="product-image">
+                    ${discountBadge}
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    ${priceDisplay}
+                </div>
+            `;
+            
+            return productCard;
+        }
+
         // Add to cart from catalog
         function addToCartFromCatalog(productId) {
             const product = products.find(p => p.id === productId);
             if (product) {
+                // Increment view count for this product
+                incrementProductView(productId);
+                
                 // Get actual price (discounted if applicable)
                 const discount = getProductDiscount(product.id);
                 const price = discount > 0 ? 
@@ -2946,11 +3400,24 @@ Wear the darkness. Own the city.</p>
                 });
                 
                 updateCart();
-                saveCartToFirestore();
+                saveCartToFirebase();
                 
                 // Show notification
                 showNotification('Produk berhasil ditambahkan ke keranjang');
             }
+        }
+
+        // Increment product view count
+        function incrementProductView(productId) {
+            db.collection("products").doc(productId).update({
+                viewCount: firebase.firestore.FieldValue.increment(1)
+            })
+            .then(() => {
+                console.log("View count incremented for product:", productId);
+            })
+            .catch((error) => {
+                console.error("Error incrementing view count:", error);
+            });
         }
 
         // Initialize infinite scroll
@@ -3235,8 +3702,8 @@ Wear the darkness. Own the city.</p>
             if ('Notification' in window && Notification.permission === 'granted') {
                 new Notification(title, {
                     body: body,
-                    icon: 'https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg',
-                    badge: 'https://i.ibb.co.com/0jc56KxW/IMG-20251106-WA0034.jpg'
+                    icon: 'https://hexahustle.vercel.app/favicon/hexahustle.png',
+                    badge: 'https://hexahustle.vercel.app/favicon/hexahustle.png'
                 });
             }
         }
@@ -3248,43 +3715,6 @@ Wear the darkness. Own the city.</p>
 
         function hideLoadingSpinner() {
             document.getElementById('loading-overlay').classList.remove('active');
-        }
-
-        // Load cart data from Firestore
-        function loadCartFromFirestore() {
-            const user = auth.currentUser;
-            if (user) {
-                db.collection("carts").doc(user.uid).get()
-                    .then((doc) => {
-                        if (doc.exists) {
-                            cart = doc.data().items || [];
-                            updateCart();
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error loading cart:", error);
-                    });
-            }
-        }
-
-        // Save cart data to Firestore
-        function saveCartToFirestore() {
-            const user = auth.currentUser;
-            if (user) {
-                db.collection("carts").doc(user.uid).set({
-                    items: cart,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                })
-                .then(() => {
-                    console.log("Cart saved to Firestore");
-                })
-                .catch((error) => {
-                    console.error("Error saving cart:", error);
-                });
-            }
-            
-            // Also save to localStorage for caching
-            localStorage.setItem('hexahustle_cart', JSON.stringify(cart));
         }
 
         // Enter site from splash screen
@@ -3355,6 +3785,9 @@ Wear the darkness. Own the city.</p>
         function showProductDetail(productId) {
             const product = products.find(p => p.id === productId);
             if (product) {
+                // Increment view count for this product
+                incrementProductView(productId);
+                
                 currentProduct = product;
                 
                 // Save to recently viewed
@@ -3491,7 +3924,7 @@ Wear the darkness. Own the city.</p>
             }
             
             relatedProducts.forEach(product => {
-                const productCard = createProductCard(product);
+                const productCard = createRelatedProductCard(product);
                 relatedProductsContainer.appendChild(productCard);
             });
         }
@@ -3524,7 +3957,7 @@ Wear the darkness. Own the city.</p>
             categoryProductsContainer.innerHTML = '';
             
             categoryProducts.forEach(product => {
-                const productCard = createProductCard(product);
+                const productCard = createCategoryProductCard(product);
                 categoryProductsContainer.appendChild(productCard);
             });
             
@@ -3602,7 +4035,7 @@ Wear the darkness. Own the city.</p>
             collectionProductsContainer.innerHTML = '';
             
             filteredProducts.forEach(product => {
-                const productCard = createProductCard(product);
+                const productCard = createCollectionProductCard(product);
                 collectionProductsContainer.appendChild(productCard);
             });
         }
@@ -3613,7 +4046,7 @@ Wear the darkness. Own the city.</p>
             collectionProductsContainer.innerHTML = '';
             
             products.forEach(product => {
-                const productCard = createProductCard(product);
+                const productCard = createCollectionProductCard(product);
                 collectionProductsContainer.appendChild(productCard);
             });
         }
@@ -3704,7 +4137,7 @@ Wear the darkness. Own the city.</p>
             
             if (filteredProducts.length > 0) {
                 filteredProducts.forEach(product => {
-                    const productCard = createProductCard(product);
+                    const productCard = createSearchProductCard(product);
                     searchResultsContainer.appendChild(productCard);
                 });
             } else {
@@ -3772,7 +4205,7 @@ Wear the darkness. Own the city.</p>
             }
             
             updateCart();
-            saveCartToFirestore();
+            saveCartToFirebase();
             cartSidebar.classList.add('active');
             
             // Show notification
@@ -3806,7 +4239,7 @@ Wear the darkness. Own the city.</p>
             });
             
             updateCart();
-            saveCartToFirestore();
+            saveCartToFirebase();
             
             // Navigate to payment page
             showPage('payment');
@@ -3866,7 +4299,7 @@ Wear the darkness. Own the city.</p>
                     removeFromCart(productId);
                 } else {
                     updateCart();
-                    saveCartToFirestore();
+                    saveCartToFirebase();
                 }
             }
         }
@@ -3875,7 +4308,7 @@ Wear the darkness. Own the city.</p>
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
             updateCart();
-            saveCartToFirestore();
+            saveCartToFirebase();
         }
 
         // Initialize payment page
@@ -3918,167 +4351,112 @@ Wear the darkness. Own the city.</p>
             selectedPaymentMethod = '';
             document.getElementById('cod-notice').classList.remove('show');
         }
-
         // Payment method selection
-        document.addEventListener('DOMContentLoaded', function() {
-            const paymentMethodOptions = document.querySelectorAll('.payment-method-option');
-            
-            paymentMethodOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    paymentMethodOptions.forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    this.classList.add('selected');
-                    selectedPaymentMethod = this.dataset.method;
-                    
-                    // Show COD notice if COD is selected
-                    const codNotice = document.getElementById('cod-notice');
-                    if (selectedPaymentMethod === 'cod') {
-                        codNotice.classList.add('show');
-                    } else {
-                        codNotice.classList.remove('show');
-                    }
+        document.querySelectorAll('.payment-method-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.payment-method-option').forEach(opt => {
+                    opt.classList.remove('selected');
                 });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Get selected payment method
+                selectedPaymentMethod = this.dataset.method;
+                
+                // Show COD notice if COD is selected
+                const codNotice = document.getElementById('cod-notice');
+                if (selectedPaymentMethod === 'cod') {
+                    codNotice.classList.add('show');
+                } else {
+                    codNotice.classList.remove('show');
+                }
             });
         });
-
+        
         // Process payment
         function processPayment() {
-            if (cart.length === 0) {
-                showNotification('Keranjang belanja Anda kosong');
-                return;
-            }
-            
+            // Validate form
             const name = document.getElementById('payment-name').value;
             const contact = document.getElementById('payment-contact').value;
             const email = document.getElementById('payment-email').value;
             const address = document.getElementById('payment-address').value;
             
             if (!name || !contact || !email || !address) {
-                showNotification('Harap lengkapi semua data pembayaran');
+                showNotification('Mohon lengkapi semua field yang diperlukan');
                 return;
             }
             
             if (!selectedPaymentMethod) {
-                showNotification('Harap pilih metode pembayaran');
+                showNotification('Mohon pilih metode pembayaran');
                 return;
             }
             
-            // Calculate total
-            let total = 0;
-            cart.forEach(item => {
-                total += item.price * item.quantity;
-            });
+            // Show loading spinner
+            showLoadingSpinner();
+            
+            // Create order object
+            const order = {
+                userId: currentUser ? currentUser.uid : null,
+                items: cart,
+                customerInfo: {
+                    name: name,
+                    contact: contact,
+                    email: email,
+                    address: address
+                },
+                paymentMethod: selectedPaymentMethod,
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                status: 'pending',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
             
             // Save order to Firestore
-            const user = auth.currentUser;
-            if (user) {
-                showLoadingSpinner();
-                
-                const orderData = {
-                    userId: user.uid,
-                    items: cart,
-                    customerInfo: {
-                        name: name,
-                        contact: contact,
-                        email: email,
-                        address: address
-                    },
-                    paymentMethod: selectedPaymentMethod,
-                    total: total,
-                    status: 'pending',
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                db.collection("orders").add(orderData)
-                    .then((docRef) => {
-                        console.log("Order saved with ID: ", docRef.id);
-                        
-                        // Create order summary for WhatsApp
-                        let orderSummary = 'Halo, saya ingin melakukan pesanan:\n\n';
-                        cart.forEach(item => {
-                            orderSummary += `- ${item.name} (Size: ${item.size}, Qty: ${item.quantity}) = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}\n`;
-                        });
-                        orderSummary += `\nTotal: Rp ${total.toLocaleString('id-ID')}\n\n`;
-                        orderSummary += `Data Pembayaran:\n`;
-                        orderSummary += `Nama: ${name}\n`;
-                        orderSummary += `Kontak: ${contact}\n`;
-                        orderSummary += `Email: ${email}\n`;
-                        orderSummary += `Alamat: ${address}\n`;
-                        orderSummary += `Metode Pembayaran: ${selectedPaymentMethod.toUpperCase()}\n`;
-                        orderSummary += `Order ID: ${docRef.id}\n`;
-                        
-                        // Encode for WhatsApp URL
-                        const encodedMessage = encodeURIComponent(orderSummary);
-                        const whatsappUrl = `https://wa.me/6285617377589?text=${encodedMessage}`;
-                        
-                        // Open WhatsApp
-                        window.open(whatsappUrl, '_blank');
-                        
-                        // Show notification
-                        showNotification('Pesanan Anda telah dibuat! Anda akan diarahkan ke WhatsApp untuk menyelesaikan pembayaran.');
-                        
-                        // Clear cart after successful order
-                        cart = [];
-                        updateCart();
-                        saveCartToFirestore();
-                        
-                        hideLoadingSpinner();
-                    })
-                    .catch((error) => {
-                        console.error("Error saving order: ", error);
-                        showNotification('Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
-                        hideLoadingSpinner();
-                    });
+            db.collection("orders").add(order)
+                .then((docRef) => {
+                    console.log("Order written with ID: ", docRef.id);
+                    
+                    // Clear cart
+                    cart = [];
+                    updateCart();
+                    saveCartToFirebase();
+                    
+                    // Hide loading spinner
+                    hideLoadingSpinner();
+                    
+                    // Show success message
+                    showNotification('Pesanan Anda telah berhasil dibuat! Kami akan segera menghubungi Anda.');
+                    
+                    // Navigate to home page
+                    showPage('home');
+                    
+                    // Send confirmation email (in a real app, this would be done on the server)
+                    sendOrderConfirmationEmail(order, docRef.id);
+                })
+                .catch((error) => {
+                    console.error("Error adding order: ", error);
+                    hideLoadingSpinner();
+                    showNotification('Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
+                });
+        }
+        
+        // Send order confirmation email (simulated)
+        function sendOrderConfirmationEmail(order, orderId) {
+            // In a real application, this would be handled by a server-side function
+            // For this demo, we'll just log the email content
+            console.log('Order confirmation email sent to:', order.customerInfo.email);
+            console.log('Order ID:', orderId);
+            console.log('Order details:', order);
+            
+            // Show push notification if enabled
+            if ('Notification' in window && Notification.permission === 'granted') {
+                showPushNotification('Pesanan Dibuat', `Pesanan Anda #${orderId} telah berhasil dibuat. Kami akan segera menghubungi Anda.`);
             }
         }
-
-        // Quantity selector
-        const quantityMinus = document.getElementById('quantity-minus');
-        const quantityPlus = document.getElementById('quantity-plus');
-        const quantitySpan = document.getElementById('quantity');
         
-        quantityMinus.addEventListener('click', function() {
-            let quantity = parseInt(quantitySpan.textContent);
-            if (quantity > 1) {
-                quantity--;
-                quantitySpan.textContent = quantity;
-            }
-        });
-        
-        quantityPlus.addEventListener('click', function() {
-            let quantity = parseInt(quantitySpan.textContent);
-            quantity++;
-            quantitySpan.textContent = quantity;
-        });
-
-        // Size selector
-        const sizeOptions = document.querySelectorAll('.size-option');
-        
-        sizeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                sizeOptions.forEach(opt => {
-                    opt.classList.remove('selected');
-                });
-                this.classList.add('selected');
-            });
-        });
-
-        // Product thumbnails
-        const thumbnails = document.querySelectorAll('.product-detail-thumbnail');
-        const mainImage = document.getElementById('product-main-image');
-        
-        thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', function() {
-                const imgSrc = this.querySelector('img').src;
-                mainImage.src = imgSrc;
-            });
-        });
-
         // Contact form submission
-        const contactForm = document.getElementById('contact-form');
-        
-        contactForm.addEventListener('submit', function(e) {
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value;
@@ -4086,105 +4464,152 @@ Wear the darkness. Own the city.</p>
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
-            // Save contact message to Firestore
-            const user = auth.currentUser;
-            if (user) {
-                showLoadingSpinner();
-                
-                const contactData = {
-                    userId: user.uid,
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                db.collection("contacts").add(contactData)
-                    .then((docRef) => {
-                        console.log("Contact message saved with ID: ", docRef.id);
-                        
-                        // Show notification
-                        showNotification('Pesan Anda telah berhasil dikirim!');
-                        
-                        // Reset form
-                        this.reset();
-                        
-                        hideLoadingSpinner();
-                    })
-                    .catch((error) => {
-                        console.error("Error saving contact message: ", error);
-                        showNotification('Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.');
-                        hideLoadingSpinner();
-                    });
-            }
+            // Show loading spinner
+            showLoadingSpinner();
+            
+            // Create message object
+            const contactMessage = {
+                name: name,
+                email: email,
+                subject: subject,
+                message: message,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            // Save message to Firestore
+            db.collection("contactMessages").add(contactMessage)
+                .then((docRef) => {
+                    console.log("Message written with ID: ", docRef.id);
+                    
+                    // Hide loading spinner
+                    hideLoadingSpinner();
+                    
+                    // Show success message
+                    showNotification('Pesan Anda telah terkirim! Kami akan segera menghubungi Anda.');
+                    
+                    // Reset form
+                    this.reset();
+                })
+                .catch((error) => {
+                    console.error("Error adding message: ", error);
+                    hideLoadingSpinner();
+                    showNotification('Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.');
+                });
         });
-
-        // Newsletter form submission
-        const newsletterForm = document.querySelector('.newsletter-form');
         
-        newsletterForm.addEventListener('submit', function(e) {
+        // Newsletter subscription
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
             e.preventDefault();
+            
             const email = this.querySelector('input[type="email"]').value;
             
-            if (email) {
-                // Save newsletter subscription to Firestore
-                const user = auth.currentUser;
-                if (user) {
-                    showLoadingSpinner();
-                    
-                    const newsletterData = {
-                        userId: user.uid,
-                        email: email,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    };
-                    
-                    db.collection("newsletter").add(newsletterData)
-                        .then((docRef) => {
-                            console.log("Newsletter subscription saved with ID: ", docRef.id);
-                            
-                            // Show notification
-                            showNotification(`Terima kasih! Email ${email} telah berhasil didaftarkan.`);
-                            
-                            this.reset();
-                            
-                            hideLoadingSpinner();
-                        })
-                        .catch((error) => {
-                            console.error("Error saving newsletter subscription: ", error);
-                            showNotification('Terjadi kesalahan saat mendaftar newsletter. Silakan coba lagi.');
-                            hideLoadingSpinner();
-                        });
-                }
+            if (!email) {
+                showNotification('Mohon masukkan email Anda');
+                return;
             }
+            
+            // Show loading spinner
+            showLoadingSpinner();
+            
+            // Check if email is already subscribed
+            db.collection("newsletter").where("email", "==", email).get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        // Email is not subscribed, add to newsletter
+                        return db.collection("newsletter").add({
+                            email: email,
+                            subscribedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    } else {
+                        // Email is already subscribed
+                        throw new Error('Email already subscribed');
+                    }
+                })
+                .then(() => {
+                    hideLoadingSpinner();
+                    showNotification('Terima kasih telah berlangganan newsletter kami!');
+                    
+                    // Reset form
+                    this.reset();
+                })
+                .catch((error) => {
+                    hideLoadingSpinner();
+                    
+                    if (error.message === 'Email already subscribed') {
+                        showNotification('Email Anda sudah terdaftar dalam newsletter kami.');
+                    } else {
+                        console.error("Error subscribing to newsletter: ", error);
+                        showNotification('Terjadi kesalahan saat berlangganan newsletter. Silakan coba lagi.');
+                    }
+                });
         });
-
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function(e) {
-            e.stopPropagation();
-            const nav = document.querySelector('nav ul');
+        
+        // Mobile menu functionality
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav ul');
+        
+        mobileMenu.addEventListener('click', function() {
             if (nav.style.display === 'flex') {
                 nav.style.display = 'none';
             } else {
                 nav.style.display = 'flex';
                 nav.style.position = 'absolute';
-                nav.style.top = '80px';
+                nav.style.top = '100%';
                 nav.style.left = '0';
                 nav.style.right = '0';
                 nav.style.flexDirection = 'column';
                 nav.style.backgroundColor = '#fff';
+                nav.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
                 nav.style.padding = '20px';
+                nav.style.zIndex = '1000';
             }
         });
-
-        // Show notification
-        function showNotification(message) {
-            // Remove existing notification if any
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) {
-                existingNotification.remove();
+        
+        // Quantity selector functionality
+        const quantityMinus = document.getElementById('quantity-minus');
+        const quantityPlus = document.getElementById('quantity-plus');
+        const quantity = document.getElementById('quantity');
+        
+        quantityMinus.addEventListener('click', function() {
+            let currentQuantity = parseInt(quantity.textContent);
+            if (currentQuantity > 1) {
+                quantity.textContent = currentQuantity - 1;
             }
-            
+        });
+        
+        quantityPlus.addEventListener('click', function() {
+            let currentQuantity = parseInt(quantity.textContent);
+            quantity.textContent = currentQuantity + 1;
+        });
+        
+        // Size selector functionality
+        document.querySelectorAll('.size-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                document.querySelectorAll('.size-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+            });
+        });
+        
+        // Product thumbnail functionality
+        document.querySelectorAll('.product-detail-thumbnail').forEach((thumbnail, index) => {
+            thumbnail.addEventListener('click', function() {
+                const mainImage = document.getElementById('product-main-image');
+                const thumbnailImage = this.querySelector('img');
+                
+                // Swap images
+                const tempSrc = mainImage.src;
+                mainImage.src = thumbnailImage.src;
+                thumbnailImage.src = tempSrc;
+            });
+        });
+        
+        // Show notification function
+        function showNotification(message) {
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.textContent = message;
@@ -4194,23 +4619,182 @@ Wear the darkness. Own the city.</p>
             // Show notification
             setTimeout(() => {
                 notification.classList.add('show');
-            }, 10);
+            }, 100);
             
             // Hide notification after 3 seconds
             setTimeout(() => {
                 notification.classList.remove('show');
+                
+                // Remove notification from DOM after animation completes
                 setTimeout(() => {
-                    notification.remove();
+                    document.body.removeChild(notification);
                 }, 300);
             }, 3000);
         }
-
-        // Close search when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!searchContainer.contains(e.target) && e.target !== searchIcon && e.target !== splashSearchIcon) {
+        
+        // Initialize app when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already signed in
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in
+                    currentUser = user;
+                    console.log("User is signed in:", user.uid);
+                    
+                    // Load data from Firebase
+                    loadProductsFromFirebase();
+                    loadCartFromFirebase();
+                    
+                    // Initialize app
+                    initializeApp();
+                } else {
+                    // User is signed out, sign in anonymously
+                    signInAnonymously();
+                }
+            });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            // Close search container if clicking outside
+            const searchContainer = document.getElementById('search-container');
+            const searchIcon = document.getElementById('search-icon');
+            
+            if (!searchContainer.contains(event.target) && event.target !== searchIcon) {
                 searchContainer.classList.remove('active');
+            }
+            
+            // Close autocomplete results if clicking outside
+            const autocompleteResults = document.getElementById('autocomplete-results');
+            const searchInput = document.getElementById('search-input');
+            
+            if (!autocompleteResults.contains(event.target) && event.target !== searchInput) {
                 autocompleteResults.style.display = 'none';
             }
+        });
+        
+        // Handle browser back button
+        window.addEventListener('popstate', function(event) {
+            // This is a simplified implementation
+            // In a real app, you would implement proper history management
+            const pages = ['home', 'collection', 'about', 'contact'];
+            const currentPage = document.querySelector('.page.active').id.replace('-page', '');
+            
+            if (pages.includes(currentPage)) {
+                showPage('home');
+            }
+        });
+        
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add print styles for order confirmation
+        window.addEventListener('beforeprint', function() {
+            // Hide unnecessary elements when printing
+            document.querySelectorAll('header, footer, .cart-sidebar, .filter-sidebar, .mobile-menu').forEach(el => {
+                el.style.display = 'none';
+            });
+        });
+        
+        window.addEventListener('afterprint', function() {
+            // Restore elements after printing
+            document.querySelectorAll('header, footer, .cart-sidebar, .filter-sidebar, .mobile-menu').forEach(el => {
+                el.style.display = '';
+            });
+        });
+        
+        // Add analytics tracking (simulated)
+        function trackEvent(eventName, parameters) {
+            // In a real app, this would send data to Google Analytics or another analytics service
+            console.log('Event tracked:', eventName, parameters);
+            
+            // Store events locally for demo purposes
+            const events = JSON.parse(localStorage.getItem('hexahustle_events') || '[]');
+            events.push({
+                event: eventName,
+                parameters: parameters,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only the last 100 events
+            if (events.length > 100) {
+                events.splice(0, events.length - 100);
+            }
+            
+            localStorage.setItem('hexahustle_events', JSON.stringify(events));
+        }
+        
+        // Track page views
+        document.addEventListener('DOMContentLoaded', function() {
+            trackEvent('page_view', {
+                page: 'home',
+                timestamp: new Date().toISOString()
+            });
+        });
+        
+        // Track product views
+        function trackProductView(productId) {
+            trackEvent('product_view', {
+                product_id: productId,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Track add to cart
+        function trackAddToCart(productId, quantity) {
+            trackEvent('add_to_cart', {
+                product_id: productId,
+                quantity: quantity,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Track purchase
+        function trackPurchase(orderId, total) {
+            trackEvent('purchase', {
+                order_id: orderId,
+                total: total,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Add error handling for unhandled promises
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('Unhandled promise rejection:', event.reason);
+            
+            // Show user-friendly error message
+            showNotification('Terjadi kesalahan. Silakan muat ulang halaman.');
+            
+            // Prevent the default browser behavior
+            event.preventDefault();
+        });
+        
+        // Add error handling for JavaScript errors
+        window.addEventListener('error', function(event) {
+            console.error('JavaScript error:', event.error);
+            
+            // Log error details for debugging
+            trackEvent('javascript_error', {
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno,
+                timestamp: new Date().toISOString()
+            });
         });
     </script>
 </body>
