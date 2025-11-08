@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Halaman utama -->
+  <url>
+    <loc>https://hexahustle.vercel.app/</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Halaman koleksi / katalog -->
+  <url>
+    <loc>https://hexahustle.vercel.app/koleksi</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Kategori produk -->
+  <url>
+    <loc>https://hexahustle.vercel.app/kategori/pria</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://hexahustle.vercel.app/kategori/wanita</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://hexahustle.vercel.app/kategori/aksesoris</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Halaman produk (contoh) -->
+  <url>
+    <loc>https://hexahustle.vercel.app/produk/jaket-gothic-shadow</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://hexahustle.vercel.app/produk/tshirt-dark-ritual</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Halaman tentang & kontak -->
+  <url>
+    <loc>https://hexahustle.vercel.app/tentang</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://hexahustle.vercel.app/kontak</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Kebijakan -->
+  <url>
+    <loc>https://hexahustle.vercel.app/kebijakan-privasi</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://hexahustle.vercel.app/syarat-ketentuan</loc>
+    <lastmod>2025-11-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
