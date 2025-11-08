@@ -72,6 +72,7 @@
             background-color: #fff;
             color: #000;
             line-height: 1.6;
+            overflow-x: hidden; /* Mencegah horizontal scroll */
         }
         
         .container {
@@ -345,6 +346,7 @@
             padding: 15px;
             z-index: 1000;
             display: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .search-container.active {
@@ -393,6 +395,7 @@
             transition: right 0.3s ease;
             padding: 20px;
             overflow-y: auto;
+            box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
         }
         
         .cart-sidebar.active {
@@ -520,6 +523,7 @@
             transition: left 0.3s ease;
             padding: 20px;
             overflow-y: auto;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
         }
         
         .filter-sidebar.active {
@@ -745,6 +749,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             border: 1px solid #fff;
+            position: relative;
         }
         
         .product-card:hover {
@@ -821,7 +826,7 @@
             transition: all 0.3s ease;
         }
         
-        .product-actions .add-to-cart {
+        .product-actions .add-to-catalog {
             background-color: #000;
             color: #fff;
         }
@@ -889,16 +894,16 @@
         }
         
         .best-seller-container::-webkit-scrollbar-track {
-            background: #fff;
+            background: #f1f1f1;
         }
         
         .best-seller-container::-webkit-scrollbar-thumb {
-            background: #fff;
+            background: #888;
             border-radius: 4px;
         }
         
         .best-seller-container::-webkit-scrollbar-thumb:hover {
-            background: #fff;
+            background: #555;
         }
         
         .best-seller-products {
@@ -1152,7 +1157,7 @@
             display: flex;
             justify-content: center;
             margin-bottom: 50px;
-            border-bottom: 1px solid#fff;
+            border-bottom: 1px solid#eee;
             flex-wrap: wrap;
         }
         
@@ -1484,9 +1489,13 @@
             background-color: #333;
         }
         
-        /* Footer */
+        /* Footer - Responsif untuk desktop */
         footer {
             padding: 50px 0 20px;
+            background-color: #f8f8f8;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
         }
         
         .footer-content {
@@ -1494,6 +1503,14 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
             margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+        
+        .footer-column {
+            width: 100%;
         }
         
         .footer-column h3 {
@@ -1546,6 +1563,12 @@
             text-align: center;
             padding-top: 20px;
             font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
         }
         
         /* Mobile Menu */
@@ -1662,6 +1685,11 @@
             content: '>';
             margin-left: 10px;
             color: #666;
+        }
+        
+        /* Hidden notification icon - Sembunyikan ikon merah di sisi kanan atas */
+        .cart-count {
+            display: none; /* Sembunyikan ikon merah */
         }
         
         /* Responsive Styles */
@@ -1795,7 +1823,7 @@
     </div>
 
     <!-- Background Music -->
-    <audio id="bg-music" loop autoplay>
+    <audio id="bg-music" loop>
         <source src="https://hexahustle.vercel.app/sound/k.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -1826,7 +1854,7 @@ HexaHustle — your armor for the grind.</p>
     <!-- Header -->
     <header id="header">
         <div class="container header-container">
-            <div class="logo" onclick="showPage('home')">HEXHUSTLE</div>
+            <div class="logo" onclick="showPage('home')">HEXAHUSTLE</div>
             <nav>
                 <ul>
                     <li><a href="#" onclick="showPage('collection')">KOLEKSI</a></li>
@@ -2176,7 +2204,7 @@ Wear the darkness. Own the city.</p>
             <div class="container">
                 <div class="collection-header">
                     <h1>KOLEKSI</h1>
-                    <p>Jelajahi seluruh koleksi HEXHUSTLE</p>
+                    <p>Jelajahi seluruh koleksi HEXAHUSTLE</p>
                 </div>
                 <div class="collection-tabs">
                     <div class="collection-tab active" onclick="filterCollection('all')">SEMUA</div>
@@ -2295,7 +2323,7 @@ Wear the darkness. Own the city.</p>
                                     </div>
                                 </div>
                                 <div class="cod-notice" id="cod-notice">
-                                    <p>COD hanya tersedia untuk wilayah Jakarta dan sekitarnya dengan minimum pembelian Rp 100.000</p>
+                                    <p>COD hanya tersedia untuk wilayah Cianjur dan sekitarnya dengan minimum pembelian Rp 100.000</p>
                                 </div>
                             </div>
                             <button type="button" class="pay-btn" onclick="processPayment()">BAYAR SEKARANG</button>
@@ -2331,21 +2359,21 @@ Wear the darkness. Own the city.</p>
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <h4>ALAMAT</h4>
-                                <p>Jl. Sudirman No. 123, Jakarta Selatan, Indonesia</p>
+                                <p>Jl. Joglo, Cianjur, Indonesia</p>
                             </div>
                         </div>
                         <div class="contact-info-item">
                             <i class="fas fa-phone"></i>
                             <div>
                                 <h4>TELEPON</h4>
-                                <p>+62 21 1234 5678</p>
+                                <p>+62856-1737-7589</p>
                             </div>
                         </div>
                         <div class="contact-info-item">
                             <i class="fas fa-envelope"></i>
                             <div>
                                 <h4>EMAIL</h4>
-                                <p>info@hexhustle.com</p>
+                                <p>sobathustle.co@gmail.com</p>
                             </div>
                         </div>
                         <div class="contact-info-item">
@@ -2423,11 +2451,11 @@ Wear the darkness. Own the city.</p>
         <section class="featured">
             <div class="container">
                 <div class="section-title">
-                    <h2>TENTANG HEXHUSTLE</h2>
+                    <h2>TENTANG HEXAHUSTLE</h2>
                     <p>Brand pakaian urban dengan fokus pada desain minimalis dan kualitas premium</p>
                 </div>
                 <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8;">
-                    <p>HEXHUSTLE adalah brand pakaian urban yang didirikan pada tahun 2020 dengan visi untuk menyediakan pakaian berkualitas tinggi dengan desain minimalis untuk generasi muda yang dinamis.</p>
+                    <p>HEXAHUSTLE adalah brand pakaian urban yang didirikan pada tahun 2020 dengan visi untuk menyediakan pakaian berkualitas tinggi dengan desain minimalis untuk generasi muda yang dinamis.</p>
                     <p>Kami percaya bahwa fashion bukan hanya tentang penampilan, tetapi juga tentang ekspresi diri. Setiap produk HEXHUSTLE dirancang dengan hati-hati untuk memberikan kenyamanan dan gaya yang tak tertandingi.</p>
                     <p>Dengan menggunakan bahan-bahan premium dan proses produksi yang berkelanjutan, kami berkomitmen untuk menciptakan produk yang tidak hanya stylish tetapi juga ramah lingkungan.</p>
                 </div>
@@ -2437,48 +2465,46 @@ Wear the darkness. Own the city.</p>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>TENTANG HEXHUSTLE</h3>
-                    <p>Brand pakaian urban dengan fokus pada desain minimalis dan kualitas premium untuk generasi muda yang dinamis.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>LINK CEPAT</h3>
-                    <ul>
-                        <li><a href="#" onclick="showPage('home')">Beranda</a></li>
-                        <li><a href="#" onclick="showPage('collection')">Koleksi</a></li>
-                        <li><a href="#" onclick="showPage('about')">Tentang Kami</a></li>
-                        <li><a href="#" onclick="showPage('contact')">Kontak</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>BANTUAN</h3>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Pengiriman</a></li>
-                        <li><a href="#">Pengembalian</a></li>
-                        <li><a href="#">Ukuran</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>KONTAK</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
-                        <li><i class="fas fa-phone"></i> +62 21 1234 5678</li>
-                        <li><i class="fas fa-envelope"></i> info@hexhustle.com</li>
-                    </ul>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>TENTANG HEXAHUSTLE</h3>
+                <p>Brand pakaian urban dengan fokus pada desain minimalis dan kualitas premium untuk generasi muda yang dinamis.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2023 HEXHUSTLE. Hak Cipta Dilindungi.</p>
+            <div class="footer-column">
+                <h3>LINK CEPAT</h3>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li><a href="#" onclick="showPage('collection')">Koleksi</a></li>
+                    <li><a href="#" onclick="showPage('about')">Tentang Kami</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Kontak</a></li>
+                </ul>
             </div>
+            <div class="footer-column">
+                <h3>BANTUAN</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Pengiriman</a></li>
+                    <li><a href="#">Pengembalian</a></li>
+                    <li><a href="#">Ukuran</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>KONTAK</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Cianjur, Indonesia</li>
+                    <li><i class="fas fa-phone"></i> +62856-1737-7589</li>
+                    <li><i class="fas fa-envelope"></i> sobathustle.co@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 HEXAHUSTLE. Hak Cipta Dilindungi.</p>
         </div>
     </footer>
 
@@ -2577,11 +2603,50 @@ Wear the darkness. Own the city.</p>
             // Initialize infinite scroll
             initializeInfiniteScroll();
             
-            // Play background music
-            playBackgroundMusic();
+            // Initialize background music with Page Visibility API
+            initializeBackgroundMusic();
             
             // Initialize filter sidebar
             initializeFilterSidebar();
+        }
+
+        // Initialize background music with Page Visibility API
+        function initializeBackgroundMusic() {
+            const bgMusic = document.getElementById('bg-music');
+            
+            // Most browsers block autoplay, so we'll handle it with user interaction
+            document.addEventListener('click', function initAudio() {
+                bgMusic.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+                
+                // Remove event listener after first interaction
+                document.removeEventListener('click', initAudio);
+            }, { once: true });
+            
+            // Handle page visibility changes
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    // Page is hidden, pause music
+                    bgMusic.pause();
+                } else {
+                    // Page is visible, play music
+                    bgMusic.play().catch(e => {
+                        console.log('Audio play failed:', e);
+                    });
+                }
+            });
+            
+            // Handle page focus/blur for older browsers
+            window.addEventListener('blur', function() {
+                bgMusic.pause();
+            });
+            
+            window.addEventListener('focus', function() {
+                bgMusic.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+            });
         }
 
         // Sample product data
@@ -3021,21 +3086,6 @@ Wear the darkness. Own the city.</p>
             
             // Show notification
             showNotification('Filter direset. Menampilkan semua produk.');
-        }
-
-        // Play background music
-        function playBackgroundMusic() {
-            const bgMusic = document.getElementById('bg-music');
-            
-            // Most browsers block autoplay, so we'll handle it with user interaction
-            document.addEventListener('click', function initAudio() {
-                bgMusic.play().catch(e => {
-                    console.log('Audio play failed:', e);
-                });
-                
-                // Remove event listener after first interaction
-                document.removeEventListener('click', initAudio);
-            }, { once: true });
         }
 
         // Check for discounted products
@@ -3960,7 +4010,7 @@ Wear the darkness. Own the city.</p>
                         
                         // Encode for WhatsApp URL
                         const encodedMessage = encodeURIComponent(orderSummary);
-                        const whatsappUrl = `https://wa.me/628123456789?text=${encodedMessage}`;
+                        const whatsappUrl = `https://wa.me/6285617377589?text=${encodedMessage}`;
                         
                         // Open WhatsApp
                         window.open(whatsappUrl, '_blank');
