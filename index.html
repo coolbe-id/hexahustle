@@ -2118,6 +2118,10 @@ HexaHustle — your armor for the grind.</p>
         <div class="filter-section">
             <h3>KATEGORI</h3>
             <div class="filter-options">
+                                <div class="filter-option">
+                    <input type="checkbox" id="filter-cap" value="cap">
+                    <label for="filter-cap">Cap</label>
+                </div>
                 <div class="filter-option">
                     <input type="checkbox" id="filter-tshirts" value="tshirts">
                     <label for="filter-tshirts">T-Shirts</label>
@@ -2126,9 +2130,33 @@ HexaHustle — your armor for the grind.</p>
                     <input type="checkbox" id="filter-hoodies" value="hoodies">
                     <label for="filter-hoodies">Hoodies</label>
                 </div>
+                                <div class="filter-option">
+                    <input type="checkbox" id="filter-sweater" value="sweater">
+                    <label for="filter-sweater">Sweater</label>
+                </div>
+                                <div class="filter-option">
+                    <input type="checkbox" id="filter-crewneck" value="crewneck">
+                    <label for="filter-crewneck">Crewneck</label>
+                </div>
+                                <div class="filter-option">
+                    <input type="checkbox" id="filter-longsleeve" value="longsleeve">
+                    <label for="filter-longsleeve">Longsleeve</label>
+                </div>
+                                <div class="filter-option">
+                    <input type="checkbox" id="filter-jacket" value="jacket">
+                    <label for="filter-jacket">Jacket</label>
+                </div>
+                                <div class="filter-option">
+                    <input type="checkbox" id="filter-doublelayers" value="doublelayers">
+                    <label for="filter-doublelayers">Double Layers</label>
+                </div>
                 <div class="filter-option">
                     <input type="checkbox" id="filter-pants" value="pants">
                     <label for="filter-pants">Pants</label>
+                </div>
+                                <div class="filter-option">
+                    <input type="checkbox" id="filter-shoes" value="shoes">
+                    <label for="filter-shoes">Shoes</label>
                 </div>
                 <div class="filter-option">
                     <input type="checkbox" id="filter-accessories" value="accessories">
@@ -3484,8 +3512,15 @@ Wear the darkness. Own the city.</p>
             const maxPrice = parseInt(document.getElementById('max-price').value) || Infinity;
             
             // Get selected categories
+            if (document.getElementById('filter-cap').checked) categoryFilters.push('cap');
             if (document.getElementById('filter-tshirts').checked) categoryFilters.push('tshirts');
             if (document.getElementById('filter-hoodies').checked) categoryFilters.push('hoodies');
+            if (document.getElementById('filter-sweater').checked) categoryFilters.push('sweater');
+            if (document.getElementById('filter-crewneck').checked) categoryFilters.push('crewneck');
+            if (document.getElementById('filter-longsleeve').checked) categoryFilters.push('longsleeve');
+            if (document.getElementById('filter-doublelayers').checked) categoryFilters.push('doublelayers');
+            if (document.getElementById('filter-jacket').checked) categoryFilters.push('jacket');
+            if (document.getElementById('filter-shoes').checked) categoryFilters.push('shoes');
             if (document.getElementById('filter-pants').checked) categoryFilters.push('pants');
             if (document.getElementById('filter-accessories').checked) categoryFilters.push('accessories');
             
